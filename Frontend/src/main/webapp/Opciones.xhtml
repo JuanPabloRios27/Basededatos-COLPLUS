@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.ui-g div {
+	background-color: #2C366E;
+	text-align: center;
+}
+
+.ui-a div {
+	background-color: #C1CCFF;
+	border: #C1CCFF font-size: 16;
+	color: #000000;
+	text-align: center;
+	border: 1px solid #fafafa;
+}
+
+.center-panel {
+	margin: 0 auto;
+	width: 60%; /* Adjust the width as needed */
+}
+</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Base de datos COL+</title>
+</h:head>
+<h:body class="center-panel ui-g">
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<h:form>
+		<p:panel class="ui-a" header="Col plus Solutions - Estadisticas">
+			<h:panelGrid rows="2" columns="3" cellpadding="5">
+				<p:commandButton action="#{testJSON.agregarcsv}" value="Reporte de Nomina" 
+					style="margin-right:10px;width:227px;height:127px">
+				</p:commandButton>
+				<p:commandButton value="Reporte de información empresarial" 
+					style="margin-right:10px;width:227px;height:127px">
+				</p:commandButton>
+				<p:button value="Reporte de salud y pension"
+					style="margin-right:10px;width:227px;height:127px">
+				</p:button>
+				<p:button value="Reporte de novedades"
+					style="margin-right:10px;width:227px;height:127px">
+				</p:button>
+				<p:button value="Reporte de base de entretenimiento"
+					style="margin-right:10px;width:227px;height:127px">
+				</p:button>
+				<p:button value="Cambiar idioma"
+					style="margin-right:10px;width:227px;height:127px">
+				</p:button>
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+
+</html>
