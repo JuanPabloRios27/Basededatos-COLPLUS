@@ -42,7 +42,7 @@ public class DemoServlet {
 		empresarios.setSueldo(Long.parseLong(request.getParameter("sueldo")));
 		int respuesta = 0;
 		try {
-			respuesta = TestJSON.postJSON(empresarios);
+			
 			PrintWriter writer = response.getWriter();
 			if(respuesta==200) {
 				writer.println("Se pudo completar el registro");

@@ -85,6 +85,9 @@ public class Empresarios {
 		this.pensiones = pensiones;
 		this.sueldo = sueldo;
 	}
+	public Empresarios() {
+		super();
+	}
 	
 	
 }
