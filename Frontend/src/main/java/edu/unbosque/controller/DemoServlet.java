@@ -32,7 +32,7 @@ public class DemoServlet {
 	public void agregarEmpresario(HttpServletRequest request, HttpServletResponse response) {
 		Empresarios empresarios = new Empresarios();
 		empresarios.setNombre(request.getParameter("nombre"));
-		empresarios.setArl(Boolean.parseBoolean(request.getParameter("arl")));
+		empresarios.setArl(request.getParameter("arl"));
 		empresarios.setCargo(request.getParameter("cargo"));
 		empresarios.setCodigo(Integer.parseInt(request.getParameter("codigo")));
 		empresarios.setDependencia(request.getParameter("dependencia"));

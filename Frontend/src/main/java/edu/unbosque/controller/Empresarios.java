@@ -1,6 +1,5 @@
 package edu.unbosque.controller;
 
-import java.util.Date;
 
 public class Empresarios {
 	private int codigo;
@@ -9,7 +8,7 @@ public class Empresarios {
 	private String cargo;
 	private String fecha;
 	private String eps;
-	private boolean arl;
+	private String arl;
 	private String pensiones;
 	private float sueldo;
 	public int getCodigo() {
@@ -30,7 +29,7 @@ public class Empresarios {
 	public String getEps() {
 		return eps;
 	}
-	public boolean isArl() {
+	public String getArl() {
 		return arl;
 	}
 	public String getPensiones() {
@@ -57,7 +56,7 @@ public class Empresarios {
 	public void setEps(String eps) {
 		this.eps = eps;
 	}
-	public void setArl(boolean arl) {
+	public void setArl(String arl) {
 		this.arl = arl;
 	}
 	public void setPensiones(String pensiones) {
@@ -66,8 +65,8 @@ public class Empresarios {
 	public void setSueldo(float sueldo) {
 		this.sueldo = sueldo;
 	}
-	public Empresarios(int codigo, String nombre, String dependencia, String cargo, String fecha, String eps,
-			boolean arl, String pensiones, float sueldo) {
+	public Empresarios(int codigo, String arl, String cargo, String dependencia, String eps, String fecha,
+			String nombre, String pensiones, float sueldo) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -82,4 +81,12 @@ public class Empresarios {
 	public Empresarios() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "Empresarios [codigo=" + codigo + ", nombre=" + nombre + ", dependencia=" + dependencia + ", cargo="
+				+ cargo + ", fecha=" + fecha + ", eps=" + eps + ", arl=" + arl + ", pensiones=" + pensiones
+				+ ", sueldo=" + sueldo + "]";
+	}
+	
+	
 }

@@ -1,7 +1,7 @@
 package co.edu.unbosque.Backend.model;
 
 
-import java.util.Date;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,7 +17,7 @@ public class Empresarios {
 	private String eps;
 	private String arl;
 	private String pensiones;
-	private long sueldo;
+	private float sueldo;
 	public int getCodigo() {
 		return codigo;
 	}
@@ -42,7 +42,7 @@ public class Empresarios {
 	public String getPensiones() {
 		return pensiones;
 	}
-	public long getSueldo() {
+	public float getSueldo() {
 		return sueldo;
 	}
 	public void setCodigo(int codigo) {
@@ -69,11 +69,11 @@ public class Empresarios {
 	public void setPensiones(String pensiones) {
 		this.pensiones = pensiones;
 	}
-	public void setSueldo(long sueldo) {
+	public void setSueldo(float sueldo) {
 		this.sueldo = sueldo;
 	}
 	public Empresarios(int codigo, String nombre, String dependencia, String cargo, String fecha, String eps,
-			String arl, String pensiones, long sueldo) {
+			String arl, String pensiones, float sueldo) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;

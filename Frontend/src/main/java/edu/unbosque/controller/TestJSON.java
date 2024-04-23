@@ -11,51 +11,56 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 public class TestJSON {
 	private static URL url;
-	private static String sitio = "http://localhost:50/";
+	private static String sitio = "http://localhost:8088/";
 	public static ArrayList<Empresarios> getJSON() throws IOException, ParseException{
-		url = new URL(sitio+"usuarios/listar");
+		url = new URL(sitio+"Empresarios/listar");
 		HttpURLConnection htpp = (HttpURLConnection)url.openConnection();
 		htpp.setRequestMethod("GET");
 		htpp.setRequestProperty("Accept", "application/json");
 		InputStream respuesta = htpp.getInputStream();
-		String json = "/Frontend/memoria/Empleados.csv";
+		byte[] inp = respuesta.readAllBytes();
+		String json = "";
+		for(int i =0;i<inp.length;i++) {
+			json += (char)inp[i];
+		}
 		ArrayList<Empresarios> lista = new ArrayList<Empresarios>();
+		lista = parsingUsuarios(json);
 		htpp.disconnect();
 		return lista;
 	}
+	
+	private static ArrayList<Empresarios> parsingUsuarios(String json) {
+		//JSONParser jsonParser = new JSONParser();
+		return null;
+	}
+
 	public void agregarcsv() {
-		System.out.println("AMOGUS");
-		String archivo = "C:\\Users\\USER\\Documents\\Universidad el Bosque\\Base de datos\\Configuracion\\Frontend\\memoria\\Empleados.csv";
+		String archivo = "C:\\Users\\USER\\git\\Basededatos-COLPLUS\\Frontend\\memoria\\Empleados.csv";
 		ArrayList<Empresarios> empresario = new ArrayList<>();
 		String linea = "";
 		String separacion = ";";
 		String[] datos;
-		boolean arl=false;
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 		    while ((linea = br.readLine()) != null) {
 		        datos = linea.split(separacion);
-		        Empresarios empresario_encontrado = new Empresarios(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], arl, datos[7], Float.parseFloat(datos[8]));
-		        postJSON(empresario_encontrado);
+		        Empresarios empresario_encontrado = new Empresarios(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], Float.parseFloat(datos[8]));
 		        empresario.add(empresario_encontrado);
 		    }
-		    
-		    System.out.println(empresario);
+		    postJSON(empresario.get(0));
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
 
 	}
-	//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
+	
+
 	public static int postJSON(Empresarios empresarios) throws IOException{
-		url = new URL(sitio+"usuarios/guardar");
-		System.out.println("Amogus23");
+		url = new URL(sitio+"Empresarios/guardar");
 		HttpURLConnection http;
 		http = (HttpURLConnection)url.openConnection();
 		try {
@@ -67,19 +72,21 @@ public class TestJSON {
 		http.setRequestProperty("Accept","application/json");
 		http.setRequestProperty("Content-Type", "application/json");
 		String data = "{"
-				+ "\"codigo\": \""+empresarios.getCodigo()
-				+ "\",\"arl\": \""+empresarios.isArl()
-				+ "\",\"cargo\": \""+empresarios.getCargo()
-				+ "\",\"dependencia\": \""+empresarios.getDependencia()
-				+ "\",\"eps\": \""+empresarios.getEps()
-				+ "\",\"dependencia\": \""+empresarios.getDependencia()
-				+ "\",\"pensiones\": \""+empresarios.getPensiones()
-				+ "\",\"sueldo\": \""+empresarios.getSueldo()
-				+"\"}";
+				+ "\"codigo\":\""+empresarios.getCodigo()
+				+ "\",\"arl\":\""+empresarios.getArl()
+				+ "\",\"cargo\":\""+empresarios.getCargo()
+				+ "\",\"dependencia\":\""+empresarios.getDependencia()
+				+ "\",\"eps\":\""+empresarios.getEps()
+				+ "\",\"fecha\":\""+empresarios.getFecha()
+				+ "\",\"nombre\":\""+empresarios.getNombre()
+				+ "\",\"pensiones\":\""+empresarios.getPensiones()
+				+ "\",\"sueldo\":\""+empresarios.getSueldo()
+				+ "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
 		stream.write(out);
 		int respuesta = http.getResponseCode();
+		System.out.println(respuesta);
 		http.disconnect();
 		return respuesta;
 	}
