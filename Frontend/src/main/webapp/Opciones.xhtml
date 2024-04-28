@@ -22,9 +22,10 @@
 }
 
 .center-panel {
-	margin: 0 auto;
-	width: 60%; /* Adjust the width as needed */
+	width: 60%;
+	margin: 20%;
 }
+
 </style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Base de datos COL+</title>
@@ -34,10 +35,10 @@
 	<h:form>
 		<p:panel class="ui-a" header="Col plus Solutions - Estadisticas">
 			<h:panelGrid rows="2" columns="3" cellpadding="5">
-				<p:commandButton action="#{empresariosJSON.agregarcsv}" value="Reporte de Nomina" 
+				<p:commandButton action="#{pagina.reportenomina}" value="Reporte de Nomina" 
 					style="margin-right:10px;width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton value="Reporte de información empresarial" 
+				<p:commandButton  value="Reporte de información empresarial" 
 					style="margin-right:10px;width:227px;height:127px">
 				</p:commandButton>
 				<p:button value="Reporte de salud y pension"

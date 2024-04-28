@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 public class Pagina {
-	public String pasar() {
+	public String reportenomina() {
 		return "ReporteNomina.xhtml";
 	}
 

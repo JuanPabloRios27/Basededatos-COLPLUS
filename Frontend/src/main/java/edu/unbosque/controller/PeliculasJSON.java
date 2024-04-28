@@ -1,9 +1,10 @@
 package edu.unbosque.controller;
-
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
@@ -18,13 +19,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 @ManagedBean
-public class EmpresariosJSON {
-	
+public class PeliculasJSON {
 	private static URL url;
 	private static String sitio = "http://localhost:8088/";
 	
-	public static ArrayList<Empresarios> getJSON() throws IOException, ParseException{
-		url = new URL(sitio+"apostadores/listar");
+	public static ArrayList<Peliculas> getJSON() throws IOException, ParseException{
+		url = new URL(sitio+"Peliculas/listar");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("GET");
 		http.setRequestProperty("Accept", "application/json");
@@ -34,35 +34,30 @@ public class EmpresariosJSON {
 		for (int i = 0; i<inp.length ; i++) {
 			json += (char)inp[i];
 		}
-		ArrayList<Empresarios> lista = new ArrayList<Empresarios>();
-		lista = parsingEmpresarios(json);
+		ArrayList<Peliculas> lista = new ArrayList<Peliculas>();
+		lista = parsingNomina(json);
 		http.disconnect();
 		return lista;
 	}
 	
-	public static ArrayList<Empresarios> parsingEmpresarios(String json) throws ParseException {
+	public static ArrayList<Peliculas> parsingNomina(String json) throws ParseException {
         JSONParser jsonParser = new JSONParser();
-        ArrayList<Empresarios> lista = new ArrayList<Empresarios>();
-        JSONArray usuarios = (JSONArray) jsonParser.parse(json);
-        Iterator i = usuarios.iterator();
+        ArrayList<Peliculas> lista = new ArrayList<Peliculas>();
+        JSONArray nominas = (JSONArray) jsonParser.parse(json);
+        Iterator i = nominas.iterator();
         while (i.hasNext()) {
             JSONObject innerObj = (JSONObject) i.next();
-            Empresarios empresario = new Empresarios();
-            empresario.setCodigo(Integer.parseInt(innerObj.get("codigo").toString())); 
-            empresario.setArl(innerObj.get("arl").toString());
-            empresario.setCargo(innerObj.get("cargo").toString());
-            empresario.setDependencia(innerObj.get("dependencia").toString());
-            empresario.setEps(innerObj.get("eps").toString());
-            empresario.setFecha(innerObj.get("fecha").toString());
-            empresario.setNombre(innerObj.get("nombre").toString());
-            empresario.setPensiones(innerObj.get("pensiones").toString());
-            empresario.setSueldo(Float.parseFloat(innerObj.get("cargo").toString()));
-            lista.add(empresario);
+            Peliculas pelicula = new Peliculas();
+            pelicula.setCodigo(Integer.parseInt(innerObj.get("codigo").toString()));
+            pelicula.setAnio(Integer.parseInt(innerObj.get("anio").toString()));
+            pelicula.setNombre(innerObj.get("nombre").toString());
+            pelicula.setGenero(innerObj.get("genero").toString());
+            lista.add(pelicula);
         }
         return lista;
 	}
-	public static int postJSON(Empresarios ab) throws IOException {
-		url = new URL(sitio+"Empresarios/guardar");
+	public static int postJSON(Peliculas ab) throws IOException {
+		url = new URL(sitio+"Pelicula/guardar");
 		HttpURLConnection http;
 		http = (HttpURLConnection)url.openConnection();
 		try {
@@ -73,16 +68,12 @@ public class EmpresariosJSON {
 		http.setDoOutput(true);
 		http.setRequestProperty("Accept", "application/json");
 		http.setRequestProperty("Content-Type", "application/json");
+		
 		String data = "{"
 				+ "\"codigo\":\""+ab.getCodigo()
-				+ "\",\"arl\":\""+ab.getArl()
-				+ "\",\"cargo\": \""+ab.getCargo()
-				+ "\",\"dependencia\": \""+ab.getDependencia()
-				+ "\",\"eps\": \""+ab.getEps()
-				+ "\",\"fecha\": \""+ab.getFecha()
 				+ "\",\"nombre\": \""+ab.getNombre()
-				+ "\",\"pensiones\": \""+ab.getPensiones()
-				+ "\",\"sueldo\":\""+ab.getSueldo()
+				+ "\",\"genero\": \""+ab.getGenero()
+				+ "\",\"anio\":\""+ab.getAnio()
 				+ "\"}";
 		byte[] out = data.getBytes(StandardCharsets.UTF_8);
 		OutputStream stream = http.getOutputStream();
@@ -93,7 +84,7 @@ public class EmpresariosJSON {
 		return respuesta;
 	}
 	public static void eliminar(int cedula) throws IOException, ParseException{
-		url = new URL(sitio+"Empresarios/eliminar/"+cedula);
+		url = new URL(sitio+"Peliculas/eliminar/"+cedula);
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("DELETE");
 		http.setRequestProperty("Accept", "application/json");
@@ -106,7 +97,7 @@ public class EmpresariosJSON {
 		http.disconnect();
 	}
 	public static void editar() throws IOException, ParseException{
-		url = new URL(sitio+"Empresarios/editar/");
+		url = new URL(sitio+"Peliculas/editar/");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("DELETE");
 		http.setRequestProperty("Accept", "application/json");
@@ -119,21 +110,20 @@ public class EmpresariosJSON {
 		http.disconnect();
 	}
 	public void agregarcsv() {
-		String archivo = "C:\\Users\\USER\\git\\Basededatos-COLPLUS\\Frontend\\memoria\\Empleados.csv";
-		ArrayList<Empresarios> empresario = new ArrayList<>();
+		String archivo = "C:\\Users\\USER\\git\\Basededatos-COLPLUS\\Frontend\\memoria\\movies.csv";
+		ArrayList<Peliculas> empresario = new ArrayList<>();
 		String linea = "";
 		String separacion = ";";
 		String[] datos;
 		try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
 		    while ((linea = br.readLine()) != null) {
 		        datos = linea.split(separacion);
-		        Empresarios empresario_encontrado = new Empresarios(Integer.parseInt(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5], datos[6], datos[7], Float.parseFloat(datos[8]));
-		        empresario.add(empresario_encontrado);
-		        postJSON(empresario_encontrado);
+		        Peliculas pelicula_encontrada = new Peliculas(Integer.parseInt(datos[0]),datos[1],Integer.parseInt(datos[2]),datos[3]);
+		        empresario.add(pelicula_encontrada);
+		        postJSON(pelicula_encontrada);
 		    }
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
-
 	}
 }

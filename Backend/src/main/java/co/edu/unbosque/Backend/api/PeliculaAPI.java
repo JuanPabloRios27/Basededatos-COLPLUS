@@ -17,6 +17,7 @@ import co.edu.unbosque.Backend.model.Peliculas;
 @RestController
 @RequestMapping("Pelicula")
 public class PeliculaAPI {
+	
 	@Autowired
 	private PeliculaDAO peliculaDAO;
 	
