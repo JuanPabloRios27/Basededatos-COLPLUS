@@ -32,7 +32,7 @@
 		<p:panel header="Opciones de ordenamiento">
 			<h:panelGrid rows="1" columns="2" cellpadding="5">
 				<h:outputText value="Ordenar por: "></h:outputText>
-				<h:commandButton value="Ordenamiento"></h:commandButton>
+				<h:commandButton value="Ordenamiento" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Lista de empleados de la empresa">
@@ -58,11 +58,14 @@
 				<p:column headerText="Sueldo">
             #{empresario.sueldo}
         </p:column>
+				<p:column headerText="Arl">
+            #{empresario.arl}
+        </p:column>
 			</p:dataTable>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia.">
 			<h:panelGrid rows="2" columns="1" cellpadding="5">
-			
+
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia de cargo.">
