@@ -24,7 +24,7 @@ public class EmpresariosJSON {
 	private static String sitio = "http://localhost:8088/";
 	
 	public static ArrayList<Empresarios> getJSON() throws IOException, ParseException{
-		url = new URL(sitio+"apostadores/listar");
+		url = new URL(sitio+"Empresarios/listar");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("GET");
 		http.setRequestProperty("Accept", "application/json");
@@ -56,7 +56,7 @@ public class EmpresariosJSON {
             empresario.setFecha(innerObj.get("fecha").toString());
             empresario.setNombre(innerObj.get("nombre").toString());
             empresario.setPensiones(innerObj.get("pensiones").toString());
-            empresario.setSueldo(Float.parseFloat(innerObj.get("cargo").toString()));
+            empresario.setSueldo(Float.parseFloat(innerObj.get("sueldo").toString()));
             lista.add(empresario);
         }
         return lista;
