@@ -28,9 +28,12 @@ public class Pagina {
 			e.printStackTrace();
 		}
 	}
-	public void ordenarEnMySQL() {
+	public void ordenarEnMySQL() throws ClassNotFoundException {
 		try {
-			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/coldatabase");
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = "root";
+            String password = "";
+			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC",user,password);
 			Statement stt = cn.createStatement();
 			ResultSet rs = stt.executeQuery("SELECT * FROM empresarios ORDER BY dependencia ASC");
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
