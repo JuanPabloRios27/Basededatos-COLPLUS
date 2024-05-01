@@ -30,9 +30,23 @@
 	<p:growl id="mensajes" showDetail="true" life="2000" />
 	<h:form>
 		<p:panel header="Opciones de ordenamiento">
-			<h:panelGrid rows="1" columns="2" cellpadding="5">
-				<h:outputText value="Ordenar por: "></h:outputText>
-				<h:commandButton value="Ordenamiento" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
+			<h:panelGrid rows="1" columns="5" cellpadding="5">
+				<h:outputText for="@next" value="Ordenar por: "></h:outputText>
+				<p:selectOneMenu id="orden" value="#{pagina.orden}"
+					style="width:125px">
+					<f:selectItem itemLabel="Seleccione uno." itemValue="" />
+					<f:selectItem itemLabel="Ascendente" itemValue="ASC" />
+					<f:selectItem itemLabel="Descendiente" itemValue="DESC" />
+				</p:selectOneMenu>
+				<h:outputText for="@next" value="Listar por dependencia: "></h:outputText>
+				<p:selectOneMenu id="dependencia" value="#{pagina.dependencia}"
+					style="width:125px">
+					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
+					<f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
+					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
+					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
+				</p:selectOneMenu>
+				<h:commandButton value="Ordenar" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Lista de empleados de la empresa">
@@ -65,11 +79,21 @@
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia.">
 			<h:panelGrid rows="2" columns="1" cellpadding="5">
-
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia de cargo.">
-			<h:panelGrid rows="2" columns="1" cellpadding="5">
+			<h:panelGrid rows="2" columns="3" cellpadding="5">
+			<h:outputText for="@next" value="Analizar dependencia por cargo: "></h:outputText>
+				<p:selectOneMenu id="dependencia-pie" value="#{pagina.dependencia}"
+					style="width:125px">
+					<f:selectItem itemLabel="Seleccione uno." itemValue="" />
+					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
+					<f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
+					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
+					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
+				</p:selectOneMenu>
+				<h:commandButton value="Visualizar"></h:commandButton>
+				<p:chart type="pie" model="#{pagina.pieModel1}" style="width:400px;height:400px" />
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
