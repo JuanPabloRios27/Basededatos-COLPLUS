@@ -31,7 +31,6 @@ public class Pagina {
 	public void ordenarEnMySQL() {
 		try {
 			Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/coldatabase");
-			
 			Statement stt = cn.createStatement();
 			ResultSet rs = stt.executeQuery("SELECT * FROM empresarios ORDER BY dependencia ASC");
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
