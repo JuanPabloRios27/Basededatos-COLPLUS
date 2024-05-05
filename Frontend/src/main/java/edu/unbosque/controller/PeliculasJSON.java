@@ -57,7 +57,7 @@ public class PeliculasJSON {
         return lista;
 	}
 	public static int postJSON(Peliculas ab) throws IOException {
-		url = new URL(sitio+"Pelicula/guardar");
+		url = new URL(sitio+"peliculas/guardar");
 		HttpURLConnection http;
 		http = (HttpURLConnection)url.openConnection();
 		try {
@@ -84,7 +84,7 @@ public class PeliculasJSON {
 		return respuesta;
 	}
 	public static void eliminar(int cedula) throws IOException, ParseException{
-		url = new URL(sitio+"Peliculas/eliminar/"+cedula);
+		url = new URL(sitio+"peliculas/eliminar/"+cedula);
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("DELETE");
 		http.setRequestProperty("Accept", "application/json");

@@ -14,7 +14,7 @@
 }
 
 .ui-a div {
-	background-color: #FFC1C1;
+	background-color: #C1CCFF;
 	border: #C1CCFF font-size: 16;
 	color: #000000;
 	text-align: center;
@@ -22,8 +22,8 @@
 }
 
 .center-panel {
-	width: 60%;
-	margin: 20%;
+	width: 40%;
+	margin: 30%;
 }
 
 </style>
@@ -33,24 +33,12 @@
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
 	<h:form>
-		<p:panel class="ui-a center-panel" header="Col plus Solutions - Estadisticas">
-			<h:panelGrid rows="2" columns="3" cellpadding="5">
-				<p:commandButton action="#{pagina.reportenomina}" value="Reporte de Nomina" 
+		<p:panel class="ui-a center-panel" header="Seleccione el tipo de informacion de los productos.">
+			<h:panelGrid rows="1" columns="2">
+				<p:commandButton action="#{pagina.reportentreteniminetopeliculas}" value="Peliculas" 
 					style="margin-right:10px;width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reporteEmpresarial}" value="Reporte de información empresarial" 
-					style="margin-right:10px;width:227px;height:127px">
-				</p:commandButton>
-				<p:commandButton action="#{pagina.reportesalud}" value="Reporte de salud y pension"
-					style="margin-right:10px;width:227px;height:127px">
-				</p:commandButton>
-				<p:commandButton action="#{pagina.reportenovedad}" value="Reporte de novedades"
-					style="margin-right:10px;width:227px;height:127px">
-				</p:commandButton>
-				<p:commandButton action="#{pagina.opcionesentretenimiento}" value="Reporte de base de entretenimiento"
-					style="margin-right:10px;width:227px;height:127px">
-				</p:commandButton>
-				<p:commandButton value="Cambiar idioma"
+				<p:commandButton action="#{pagina.reportentreteniminetolibros}" value="Libros" 
 					style="margin-right:10px;width:227px;height:127px">
 				</p:commandButton>
 			</h:panelGrid>

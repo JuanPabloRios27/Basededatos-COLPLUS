@@ -38,15 +38,15 @@
 					<f:selectItem itemLabel="Ascendente" itemValue="ASC" />
 					<f:selectItem itemLabel="Descendiente" itemValue="DESC" />
 				</p:selectOneMenu>
-				<h:outputText for="@next" value="Listar por dependencia: "></h:outputText>
-				<p:selectOneMenu id="dependencia" value="#{pagina.dependencia}"
+				<h:outputText for="@next" value="Listar por EPS: "></h:outputText>
+				<p:selectOneMenu id="dependencia" value="#{pagina.eps}"
 					style="width:125px">
-					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
-					<f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
-					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
-					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
+					<f:selectItem itemLabel="EPS-Sanitas" itemValue="EPS-Sanitas" />
+					<f:selectItem itemLabel="Aliansalud EPS" itemValue="Aliansalud EPS" />
+					<f:selectItem itemLabel="Nueva EPS" itemValue="Nueva EPS" />
+					<f:selectItem itemLabel="EPS-Sura" itemValue="EPS-Sura" />
 				</p:selectOneMenu>
-				<h:commandButton value="Ordenar" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
+				<h:commandButton value="Ordenar" action="#{pagina.ordenarEnMySQLeps}"></h:commandButton>
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Lista de empleados de la empresa">
@@ -57,17 +57,20 @@
 				<p:column headerText="Nombre">
             #{empresario.nombre}
         </p:column>
-				<p:column headerText="Cargo">
-            #{empresario.cargo}
+				<p:column headerText="Eps">
+            #{empresario.eps}
         </p:column>
-				<p:column headerText="Dependencia">
-            #{empresario.dependencia}
+				<p:column headerText="Pension">
+            #{empresario.pensiones}
+        </p:column>
+				<p:column headerText="ARL">
+            #{empresario.arl}
         </p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:panel header="Cantidad de empleados por dependencia.">
+		<p:panel header="Cantidad de empleados por EPS.">
 			<h:panelGrid rows="2" columns="1" cellpadding="5">
-			<p:chart type="pie" model="#{pagina.pieModel1}"
+				<p:chart type="pie" model="#{pagina.pieModel1}"
 					style="width:400px;height:300px" />
 			</h:panelGrid>
 		</p:panel>
@@ -82,9 +85,9 @@
 					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
 					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
 				</p:selectOneMenu>
-				<h:commandButton action="#{pagina.createPieModel2}" value="Visualizar"></h:commandButton>
-				<p:chart type="pie" model="#{pagina.pieModel2}"
-					style="width:400px;height:500px" />
+				<h:commandButton value="Visualizar"></h:commandButton>
+				<p:chart type="pie" model="#{pagina.pieModel1}"
+					style="width:400px;height:300px" />
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
