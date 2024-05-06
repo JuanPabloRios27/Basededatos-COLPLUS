@@ -51,29 +51,6 @@ public class Pagina {
 		createPieModel1();
 		createPieModel2();
 	}
-	private ArrayList<Empresarios> graficossqlempresarios(String string) {
-		try {
-			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
-			Class.forName("com.mysql.jdbc.Driver");
-			String user = "root";
-			String password = "";
-			ResultSet rs;
-			Connection cn = DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
-			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios where dependencia = '"+string+"'");
-			while (rs.next()) {
-				Empresarios empresarios = new Empresarios();
-				empresarios.setCodigo(rs.getInt("codigo"));
-				listaOrdenada.add(empresarios);
-			}
-			cn.close();
-			return listaOrdenada;
-		}catch(Exception e) {
-			
-		}
-		return null;
-	}
 	public void createPieModel1() {
 		ArrayList<Empresarios> empresariosTecnologia = graficossqlempresarios("Tecnologia");
 		ArrayList<Empresarios> empresariosFacturacion = graficossqlempresarios("Facturacion");
@@ -122,7 +99,29 @@ public class Pagina {
 		pieModel2.setLegendPosition("e");
 		pieModel2.setShadow(false);
 	}
-
+	private ArrayList<Empresarios> graficossqlempresarios(String string) {
+		try {
+			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = "root";
+			String password = "";
+			ResultSet rs;
+			Connection cn = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
+			Statement stt = cn.createStatement();
+			rs = stt.executeQuery("SELECT * FROM empresarios where dependencia = '"+string+"'");
+			while (rs.next()) {
+				Empresarios empresarios = new Empresarios();
+				empresarios.setCodigo(rs.getInt("codigo"));
+				listaOrdenada.add(empresarios);
+			}
+			cn.close();
+			return listaOrdenada;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	private ArrayList<Empresarios> graficossqlempresariosporcargo(String dependencia, String cargo) {
 		try {
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
@@ -146,7 +145,7 @@ public class Pagina {
 		}
 		return null;
 	}
-	
+
 	private ArrayList<Libros> createSQLlibros() {
 		try {
 			ArrayList<Libros> listaOrdenada = new ArrayList<>();
