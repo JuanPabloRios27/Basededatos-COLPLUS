@@ -31,6 +31,21 @@ public class Pagina {
 	private ArrayList<EmpresarioNorma> codigonorma_novedad;
 	private ArrayList<Peliculas> peliculas;
 	private ArrayList<Libros> libros;
+	public Pagina() {
+		try {
+			empresarios = EmpresariosJSON.getJSON();
+			codigonorma = createSQLEmpNo();
+			codigonorma_novedad = createSQLnovedad();
+			peliculas = createSQLpeliculas();
+			libros = createSQLlibros();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@PostConstruct
     public void init() {
 		createPieModel1();
@@ -131,21 +146,7 @@ public class Pagina {
 		}
 		return null;
 	}
-	public Pagina() {
-		try {
-			empresarios = EmpresariosJSON.getJSON();
-			codigonorma = createSQLEmpNo();
-			codigonorma_novedad = createSQLnovedad();
-			peliculas = createSQLpeliculas();
-			libros = createSQLlibros();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	private ArrayList<Libros> createSQLlibros() {
 		try {
 			ArrayList<Libros> listaOrdenada = new ArrayList<>();
