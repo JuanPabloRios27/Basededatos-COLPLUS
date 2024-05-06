@@ -26,6 +26,7 @@ public class Pagina {
 	private String eps;
 	private PieChartModel pieModel1;
 	private PieChartModel pieModel2;
+	private PieChartModel pieModel3;
 	private ArrayList<Empresarios> empresarios;
 	private ArrayList<EmpresarioNorma> codigonorma;
 	private ArrayList<EmpresarioNorma> codigonorma_novedad;
@@ -50,6 +51,21 @@ public class Pagina {
     public void init() {
 		createPieModel1();
 		createPieModel2();
+		createPieModel3();
+	}
+	private void createPieModel3() {
+		ArrayList<Empresarios> empresariosTecnologia = graficossqleps("EPS-Sanitas");
+		ArrayList<Empresarios> empresariosFacturacion = graficossqleps("Aliansalud EPS");
+		ArrayList<Empresarios> empresariosContabilidad = graficossqleps("Nueva EPS");
+		ArrayList<Empresarios> empresariosComercial = graficossqleps("EPS-Sura");
+		pieModel3 = new PieChartModel();
+		pieModel3.set("EPS-Sanitas", empresariosTecnologia.size());
+		pieModel3.set("Aliansalud EPS", empresariosFacturacion.size());
+		pieModel3.set("Nueva EPS", empresariosContabilidad.size());
+		pieModel3.set("EPS-Sura", empresariosComercial.size());
+		pieModel3.setTitle("Cantidad de empleados por eps");
+		pieModel3.setLegendPosition("e");
+		pieModel3.setShadow(false);
 	}
 	public void createPieModel1() {
 		ArrayList<Empresarios> empresariosTecnologia = graficossqlempresarios("Tecnologia");
@@ -98,6 +114,29 @@ public class Pagina {
 		pieModel2.setTitle("Total de empleados por "+dependencia2+" por cargo");
 		pieModel2.setLegendPosition("e");
 		pieModel2.setShadow(false);
+	}
+	private ArrayList<Empresarios> graficossqleps(String string) {
+		try {
+			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = "root";
+			String password = "";
+			ResultSet rs;
+			Connection cn = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
+			Statement stt = cn.createStatement();
+			rs = stt.executeQuery("SELECT * FROM empresarios where eps = '"+string+"'");
+			while (rs.next()) {
+				Empresarios empresarios = new Empresarios();
+				empresarios.setCodigo(rs.getInt("codigo"));
+				listaOrdenada.add(empresarios);
+			}
+			cn.close();
+			return listaOrdenada;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	private ArrayList<Empresarios> graficossqlempresarios(String string) {
 		try {
@@ -400,6 +439,12 @@ public class Pagina {
 		this.pieModel1 = pieModel1;
 	}
 
+	public PieChartModel getPieModel3() {
+		return pieModel3;
+	}
+	public void setPieModel3(PieChartModel pieModel3) {
+		this.pieModel3 = pieModel3;
+	}
 	public String getDependencia2() {
 		return dependencia2;
 	}

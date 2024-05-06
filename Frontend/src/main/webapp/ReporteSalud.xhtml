@@ -70,11 +70,11 @@
 		</p:panel>
 		<p:panel header="Cantidad de empleados por EPS.">
 			<h:panelGrid rows="2" columns="1" cellpadding="5">
-				<p:chart type="pie" model="#{pagina.pieModel1}"
+				<p:chart type="pie" model="#{pagina.pieModel3}"
 					style="width:400px;height:300px" />
 			</h:panelGrid>
 		</p:panel>
-		<p:panel header="Cantidad de empleados por dependencia de cargo.">
+		<p:panel header="Cantidad de empleados por pension por dependencia.">
 			<h:panelGrid rows="2" columns="3" cellpadding="5">
 				<h:outputText for="@next" value="Analizar dependencia por cargo: "></h:outputText>
 				<p:selectOneMenu id="dependencia-pie" value="#{pagina.dependencia2}"
@@ -87,7 +87,7 @@
 				</p:selectOneMenu>
 				<h:commandButton value="Visualizar"></h:commandButton>
 				<p:chart type="pie" model="#{pagina.pieModel1}"
-					style="width:400px;height:300px" />
+					style="width:400px;height:400px" />
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
