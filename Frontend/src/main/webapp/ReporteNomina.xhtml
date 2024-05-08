@@ -30,7 +30,7 @@
 	<p:growl id="mensajes" showDetail="true" life="2000" />
 	<h:form>
 		<p:panel header="Opciones de ordenamiento">
-			<h:panelGrid rows="1" columns="5" cellpadding="5">
+			<h:panelGrid rows="1" columns="7" cellpadding="5">
 				<h:outputText for="@next" value="Ordenar por: "></h:outputText>
 				<p:selectOneMenu id="orden" value="#{pagina.orden}"
 					style="width:125px">
@@ -41,10 +41,28 @@
 				<h:outputText for="@next" value="Listar por dependencia: "></h:outputText>
 				<p:selectOneMenu id="dependencia" value="#{pagina.dependencia}"
 					style="width:125px">
+					<f:selectItem itemLabel="Seleccione" itemValue="*" />
 					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
 					<f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
 					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
 					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
+				</p:selectOneMenu>
+				<h:outputText for="@next" value="Listar por cargo: "></h:outputText>
+				<p:selectOneMenu id="cargo" value="#{pagina.cargo}"
+					style="width:125px">
+					<f:selectItem itemLabel="Seleccione" itemValue="*" />
+					<f:selectItem itemLabel="Ingeniero de Desarrollo" itemValue="Ingeniero de Desarrollo" />
+					<f:selectItem itemLabel="Auxiliar especializado" itemValue="Auxiliar especializado" />
+					<f:selectItem itemLabel="Director de Impuestos" itemValue="Director de Impuestos" />
+					<f:selectItem itemLabel="Gerente de ventas" itemValue="Gerente de ventas" />
+					<f:selectItem itemLabel ="DBA" itemValue="DBA"/>
+					<f:selectItem itemLabel ="Ingeniero de Soporte" itemValue="Ingeniero de Soporte"/>
+					<f:selectItem itemLabel ="Director de Facturacion" itemValue="Director de Facturacion"/>
+					<f:selectItem itemLabel ="Director de cartera" itemValue="Director de cartera"/>
+					<f:selectItem itemLabel ="Director de costos" itemValue="Director de costos"/>
+					<f:selectItem itemLabel ="Auditor interno" itemValue="Auditor interno"/>
+					<f:selectItem itemLabel ="Lider de infraestructura" itemValue="Lider de infraestructura"/>
+					<f:selectItem itemLabel ="Lider de QA" itemValue="Lider de QA"/>
 				</p:selectOneMenu>
 				<h:commandButton value="Ordenar" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
 			</h:panelGrid>
@@ -66,27 +84,12 @@
 			</p:dataTable>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia.">
-			<h:panelGrid rows="2" columns="1" cellpadding="5">
 				<p:chart type="pie" model="#{pagina.pieModel1}"
-					style="width:1200px;height:700px" />
-			</h:panelGrid>
+					style="width:90%;height:700px" />
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia de cargo.">
-			<h:panelGrid rows="2" columns="3" cellpadding="5">
-				<h:outputText for="@next" value="Analizar dependencia por cargo: "></h:outputText>
-				<p:selectOneMenu id="Salud-pie" value="#{pagina.dependencia2}"
-					style="width:125px">
-					<f:selectItem itemLabel="Seleccione uno." itemValue="" />
-					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
-					<f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
-					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
-					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
-				</p:selectOneMenu>
-				<h:commandButton action="#{pagina.createPieModel2}"
-					value="Visualizar"></h:commandButton>
-			</h:panelGrid>
-			<p:chart type="pie" model="#{pagina.pieModel2}"
-				style="width:1200px;height:700px" />
+			<p:chart type="bar" model="#{pagina.barModel}"
+				style="width:90%;height:700px" />
 		</p:panel>
 	</h:form>
 </h:body>

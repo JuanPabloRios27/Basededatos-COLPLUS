@@ -7,16 +7,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-
 import org.json.simple.parser.ParseException;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.axes.cartesian.CartesianScales;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
+import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
+import org.primefaces.model.charts.bar.BarChartDataSet;
+import org.primefaces.model.charts.bar.BarChartOptions;
+import org.primefaces.model.charts.optionconfig.title.Title;
+import org.primefaces.model.charts.polar.PolarAreaChartDataSet;
+import org.primefaces.model.charts.polar.PolarAreaChartModel;
 
 @ViewScoped
 @ManagedBean
@@ -24,13 +32,15 @@ import org.primefaces.model.chart.PieChartModel;
 public class Pagina {
 	private String orden;
 	private String dependencia;
-	private String dependencia2;
+	private PolarAreaChartModel polarAreaModel;
+	private PolarAreaChartModel polarAreaModel2;
+	private String dependencia2="Tecnologia";
+	private String pension;
 	private String salud;
+	private String cargo;
 	private String eps;
 	private PieChartModel pieModel1;
-	private PieChartModel pieModel2;
-	private BarChartModel barModel3;
-	private BarChartModel barModel4;
+	private BarChartModel barModel;
 	private ArrayList<Empresarios> empresarios;
 	private ArrayList<EmpresarioNorma> codigonorma;
 	private ArrayList<EmpresarioNorma> codigonorma_novedad;
@@ -54,65 +64,39 @@ public class Pagina {
 	@PostConstruct
     public void init() {
 		createPieModel1();
-		createPieModel2();
-		createPieModel3();
-		createPieModel4();
+		createBarModel();
+		createPolarAreaModel();
+		createPolarAreaModel2();
 	}
-	public void createPieModel4() {
-		barModel4 = new BarChartModel();
-		ArrayList<Empresarios> Colpensiones = graficossqlempresariosporpension("Colpensiones");
-		ArrayList<Empresarios> Proteccion = graficossqlempresariosporpension("Proteccion");
-		ArrayList<Empresarios> Provenir = graficossqlempresariosporpension("Provenir");
-		ArrayList<Empresarios> Skandia = graficossqlempresariosporpension("Skandia");
-		ChartSeries boys = new ChartSeries();
-        boys.setLabel("Pensiones");
-        boys.set("Colpensiones", Colpensiones.size());
-        boys.set("Proteccion", Proteccion.size());
-        boys.set("Provenir", Provenir.size());
-        boys.set("Skandia", Provenir.size());
-		barModel4.addSeries(boys);
-		barModel4.setLegendPosition("e");
-		barModel4.setShadow(false);
-	}
-	private ArrayList<Empresarios> graficossqlempresariosporpension(String string) {
-		try {
-			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
-			Class.forName("com.mysql.jdbc.Driver");
-			String user = "root";
-			String password = "";
-			ResultSet rs;
-			Connection cn = DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
-			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios where pensiones = '"+string+"'");
-			while (rs.next()) {
-				Empresarios empresarios = new Empresarios();
-				empresarios.setCodigo(rs.getInt("codigo"));
-				listaOrdenada.add(empresarios);
-			}
-			cn.close();
-			return listaOrdenada;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public void createPieModel3() {
-		ArrayList<Empresarios> empresariosSanitas = graficossqleps("EPS-Sanitas");
-		ArrayList<Empresarios> empresariosAliansa = graficossqleps("Aliansalud EPS");
-		ArrayList<Empresarios> empresariosNuevaEps = graficossqleps("Nueva EPS");
-		ArrayList<Empresarios> empresariosEpsSura = graficossqleps("EPS-Sura");
-		barModel3 = new BarChartModel();
-		ChartSeries boys = new ChartSeries();
-        boys.setLabel("EPS");
-        boys.set("EPS-Sanitas", empresariosSanitas.size());
-        boys.set("Aliansalud EPS", empresariosAliansa.size());
-        boys.set("Nueva EPS", empresariosNuevaEps.size());
-        boys.set("EPS-Sura", empresariosEpsSura.size());
-		barModel3.addSeries(boys);
-		barModel3.setTitle("");
-		barModel3.setLegendPosition("e");
-		barModel3.setShadow(false);
+	private void createPolarAreaModel2() {
+		polarAreaModel2 = new PolarAreaChartModel();
+        ChartData data = new ChartData();
+        ArrayList<Empresarios> empresariosProteccion = graficossqlconsulraepspension("Proteccion","Pension");
+		ArrayList<Empresarios> empresariosSkandia = graficossqlconsulraepspension("Skandia","Pension");
+		ArrayList<Empresarios> empresariosProvenir = graficossqlconsulraepspension("Provenir","Pension");
+		ArrayList<Empresarios> empresariosColpensiones = graficossqlconsulraepspension("Colpensiones","Pension");
+        PolarAreaChartDataSet dataSet = new PolarAreaChartDataSet();
+        List<Number> values = new ArrayList<>();
+        values.add(empresariosProteccion.size());
+        values.add(empresariosSkandia.size());
+        values.add(empresariosProvenir.size());
+        values.add(empresariosColpensiones.size());
+        dataSet.setData(values);
+         
+        List<String> bgColors = new ArrayList<>();
+        bgColors.add("rgb(255, 99, 132)");
+        bgColors.add("rgb(75, 192, 192)");
+        bgColors.add("rgb(255, 205, 86)");
+        bgColors.add("rgb(201, 203, 207)");
+        dataSet.setBackgroundColor(bgColors);
+        data.addChartDataSet(dataSet);
+        List<String> labels = new ArrayList<>();
+        labels.add("Proteccion");
+        labels.add("Skandia");
+        labels.add("Provenir");
+        labels.add("Colpensiones");
+        data.setLabels(labels);
+        polarAreaModel2.setData(data);
 	}
 	public void createPieModel1() {
 		ArrayList<Empresarios> empresariosTecnologia = graficossqlempresarios("Tecnologia");
@@ -128,41 +112,76 @@ public class Pagina {
 		pieModel1.setLegendPosition("e");
 		pieModel1.setShadow(false);
 	}
-	public void createPieModel2() {
-		ArrayList<Empresarios> directorventas = graficossqlempresariosporcargo(dependencia2,"Director de ventas");
-		ArrayList<Empresarios> ingdesarollo = graficossqlempresariosporcargo(dependencia2,"Ingeniero de Desarrollo");
-		ArrayList<Empresarios> Auxiliaresp = graficossqlempresariosporcargo(dependencia2,"Auxiliar especializado");
-		ArrayList<Empresarios> gerente = graficossqlempresariosporcargo(dependencia2,"Gerente de ventas");
-		ArrayList<Empresarios> facturacion = graficossqlempresariosporcargo(dependencia2,"Director de Facturacion");
-		ArrayList<Empresarios> impuestos = graficossqlempresariosporcargo(dependencia2, "Director de Impuestos");
-		ArrayList<Empresarios> soporte = graficossqlempresariosporcargo(dependencia2, "Ingeniero de Soporte");
-		ArrayList<Empresarios> infraestructura = graficossqlempresariosporcargo(dependencia2, "Lider de infraestructura");
-		ArrayList<Empresarios> liderDQA = graficossqlempresariosporcargo(dependencia2, "Lider de QA");
-		ArrayList<Empresarios> DBA = graficossqlempresariosporcargo(dependencia2, "DBA");
-		ArrayList<Empresarios> Directorcartera = graficossqlempresariosporcargo(dependencia2, "Director de cartera");
-		ArrayList<Empresarios> Auditorinterno = graficossqlempresariosporcargo(dependencia2, "Auditor Interno");
-		ArrayList<Empresarios> Directorpresupuesto = graficossqlempresariosporcargo(dependencia2, "Director de presupuestos");
-		ArrayList<Empresarios> Directorcostos = graficossqlempresariosporcargo(dependencia2, "Director de costos");
-		pieModel2 = new PieChartModel();
-		pieModel2.set("Director de ventas", directorventas.size());
-		pieModel2.set("Ingeniero de desarollo", ingdesarollo.size());
-		pieModel2.set("Auxiliar especializado", Auxiliaresp.size());
-		pieModel2.set("Gerente de ventas", gerente.size());
-		pieModel2.set("Gerente de facturacion", facturacion.size());
-		pieModel2.set("Director de impuestos", impuestos.size());
-		pieModel2.set("Ingeniero de soporte", soporte.size());
-		pieModel2.set("Lider de infraestructura", infraestructura.size());
-		pieModel2.set("Lider de QA", liderDQA.size());
-		pieModel2.set("Director de cartera", Directorcartera.size());
-		pieModel2.set("DBA", DBA.size());
-		pieModel2.set("Auditor interno", Auditorinterno.size());
-		pieModel2.set("Director de presupuestos", Directorpresupuesto.size());
-		pieModel2.set("Director de costos", Directorcostos.size());
-		pieModel2.setTitle("Total de empleados por "+dependencia2+" por cargo");
-		pieModel2.setLegendPosition("e");
-		pieModel2.setShadow(false);
+	public void createBarModel() {
+		barModel = new BarChartModel();
+		barModel.setTitle("Resultados");
+		barModel.setLegendPosition("ne");
+        String[] dependencias= {"Tecnologia","Facturacion","Contabilidad","Comercial"};
+        for(int i =0;i<dependencias.length;i++) {
+        	ChartSeries values = new ChartSeries();
+        	
+        	values.setLabel(dependencias[i]);
+        	ArrayList<Empresarios> directorventas = graficossqlempresariosporcargo(dependencias[i],"Director de ventas");
+    		ArrayList<Empresarios> ingdesarollo = graficossqlempresariosporcargo(dependencias[i],"Ingeniero de Desarrollo");
+    		ArrayList<Empresarios> Auxiliaresp = graficossqlempresariosporcargo(dependencias[i],"Auxiliar especializado");
+    		ArrayList<Empresarios> gerente = graficossqlempresariosporcargo(dependencias[i],"Gerente de ventas");
+    		ArrayList<Empresarios> facturacion = graficossqlempresariosporcargo(dependencias[i],"Director de Facturacion");
+    		ArrayList<Empresarios> impuestos = graficossqlempresariosporcargo(dependencias[i], "Director de Impuestos");
+    		ArrayList<Empresarios> soporte = graficossqlempresariosporcargo(dependencias[i], "Ingeniero de Soporte");
+    		ArrayList<Empresarios> infraestructura = graficossqlempresariosporcargo(dependencias[i], "Lider de infraestructura");
+    		ArrayList<Empresarios> liderDQA = graficossqlempresariosporcargo(dependencias[i], "Lider de QA");
+    		ArrayList<Empresarios> DBA = graficossqlempresariosporcargo(dependencias[i], "DBA");
+    		ArrayList<Empresarios> Directorcartera = graficossqlempresariosporcargo(dependencias[i], "Director de cartera");
+    		ArrayList<Empresarios> Auditorinterno = graficossqlempresariosporcargo(dependencias[i], "Auditor Interno");
+    		ArrayList<Empresarios> Directorpresupuesto = graficossqlempresariosporcargo(dependencias[i], "Director de presupuestos");
+    		ArrayList<Empresarios> Directorcostos = graficossqlempresariosporcargo(dependencias[i], "Director de costos");
+    		values.set("Dr. ventas",directorventas.size());
+            values.set("Ing. desarollo",ingdesarollo.size());
+            values.set("Aux. esp.",Auxiliaresp.size());
+            values.set("Gr. Ventas",gerente.size());
+            values.set("Dir. facturas",facturacion.size());
+            values.set("Dir. imp.",impuestos.size());
+            values.set("Ing. Soporte",soporte.size());
+            values.set("L. Infras",infraestructura.size());
+            values.set("L. QA",liderDQA.size());
+            values.set("DBA",DBA.size());
+            values.set("Dir. Cartera",Directorcartera.size());
+            values.set("Aud. interno",Auditorinterno.size());
+            values.set("Dir. presp.",Directorpresupuesto.size());
+            values.set("Dir. costos",Directorcostos.size());
+            barModel.addSeries(values);
+        }
 	}
-	private ArrayList<Empresarios> graficossqleps(String string) {
+	private void createPolarAreaModel() {
+        polarAreaModel = new PolarAreaChartModel();
+        ChartData data = new ChartData();
+        ArrayList<Empresarios> empresariosSanitas = graficossqlconsulraepspension("EPS-Sanitas","Salud");
+		ArrayList<Empresarios> empresariosAliansa = graficossqlconsulraepspension("Aliansalud EPS","Salud");
+		ArrayList<Empresarios> empresariosNuevaEps = graficossqlconsulraepspension("Nueva EPS","Salud");
+		ArrayList<Empresarios> empresariosEpsSura = graficossqlconsulraepspension("EPS-Sura","Salud");
+        PolarAreaChartDataSet dataSet = new PolarAreaChartDataSet();
+        List<Number> values = new ArrayList<>();
+        values.add(empresariosSanitas.size());
+        values.add(empresariosAliansa.size());
+        values.add(empresariosNuevaEps.size());
+        values.add(empresariosEpsSura.size());
+        dataSet.setData(values);     
+        List<String> bgColors = new ArrayList<>();
+        bgColors.add("rgb(255, 99, 132)");
+        bgColors.add("rgb(75, 192, 192)");
+        bgColors.add("rgb(255, 205, 86)");
+        bgColors.add("rgb(201, 203, 207)");
+        dataSet.setBackgroundColor(bgColors);
+        data.addChartDataSet(dataSet);
+        List<String> labels = new ArrayList<>();
+        labels.add("Eps-Sanitas");
+        labels.add("AliansaSalud");
+        labels.add("Nueva Eps");
+        labels.add("Eps-Sura");
+        data.setLabels(labels);
+        polarAreaModel.setData(data);
+    }
+	private ArrayList<Empresarios> graficossqlconsulraepspension(String string, String string2) {
 		try {
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
 			Class.forName("com.mysql.jdbc.Driver");
@@ -172,7 +191,10 @@ public class Pagina {
 			Connection cn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
 			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios where eps = '"+string+"'");
+			rs = stt.executeQuery("SELECT * FROM empresarios where pensiones = '"+string+"'");
+			if(string2=="Salud") {
+				rs = stt.executeQuery("SELECT * FROM empresarios where eps = '"+string+"'");
+			}
 			while (rs.next()) {
 				Empresarios empresarios = new Empresarios();
 				empresarios.setCodigo(rs.getInt("codigo"));
@@ -369,7 +391,7 @@ public class Pagina {
 			Connection cn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
 			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios WHERE eps = '"+eps+"' ORDER BY nombre "+ orden );
+			rs = stt.executeQuery("SELECT * FROM empresarios WHERE eps = '"+eps+"' OR pensiones = '"+pension+"' ORDER BY nombre "+ orden );
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
 			while (rs.next()) {
 				Empresarios empresario = new Empresarios();
@@ -401,7 +423,7 @@ public class Pagina {
 			Connection cn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
 			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios WHERE dependencia = '"+dependencia+"' ORDER BY nombre "+ orden );
+			rs = stt.executeQuery("SELECT * FROM empresarios WHERE dependencia = '"+dependencia+"' OR cargo = '"+cargo+"' ORDER BY nombre "+ orden );
 			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
 			while (rs.next()) {
 				Empresarios empresario = new Empresarios();
@@ -463,15 +485,6 @@ public class Pagina {
 	public PieChartModel getPieModel1() {
 		return pieModel1;
 	}
-	public PieChartModel getPieModel2() {
-		return pieModel2;
-	}
-	public BarChartModel getBarModel3() {
-		return barModel3;
-	}
-	public BarChartModel getBarModel4() {
-		return barModel4;
-	}
 	public ArrayList<Empresarios> getEmpresarios() {
 		return empresarios;
 	}
@@ -505,15 +518,6 @@ public class Pagina {
 	public void setPieModel1(PieChartModel pieModel1) {
 		this.pieModel1 = pieModel1;
 	}
-	public void setPieModel2(PieChartModel pieModel2) {
-		this.pieModel2 = pieModel2;
-	}
-	public void setBarModel3(BarChartModel barModel3) {
-		this.barModel3 = barModel3;
-	}
-	public void setBarModel4(BarChartModel barModel4) {
-		this.barModel4 = barModel4;
-	}
 	public void setEmpresarios(ArrayList<Empresarios> empresarios) {
 		this.empresarios = empresarios;
 	}
@@ -529,5 +533,34 @@ public class Pagina {
 	public void setLibros(ArrayList<Libros> libros) {
 		this.libros = libros;
 	}
-	
+	public PolarAreaChartModel getPolarAreaModel() {
+		return polarAreaModel;
+	}
+	public void setPolarAreaModel(PolarAreaChartModel polarAreaModel) {
+		this.polarAreaModel = polarAreaModel;
+	}
+	public PolarAreaChartModel getPolarAreaModel2() {
+		return polarAreaModel2;
+	}
+	public void setPolarAreaModel2(PolarAreaChartModel polarAreaModel2) {
+		this.polarAreaModel2 = polarAreaModel2;
+	}
+	public String getPension() {
+		return pension;
+	}
+	public void setPension(String pension) {
+		this.pension = pension;
+	}
+	public String getCargo() {
+		return cargo;
+	}
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+	public BarChartModel getBarModel() {
+		return barModel;
+	}
+	public void setBarModel(BarChartModel barModel) {
+		this.barModel = barModel;
+	}
 }
