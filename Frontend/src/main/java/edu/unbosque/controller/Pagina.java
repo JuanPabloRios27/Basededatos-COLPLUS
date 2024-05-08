@@ -14,6 +14,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.json.simple.parser.ParseException;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 @ViewScoped
@@ -23,10 +25,12 @@ public class Pagina {
 	private String orden;
 	private String dependencia;
 	private String dependencia2;
+	private String salud;
 	private String eps;
 	private PieChartModel pieModel1;
 	private PieChartModel pieModel2;
-	private PieChartModel pieModel3;
+	private BarChartModel barModel3;
+	private BarChartModel barModel4;
 	private ArrayList<Empresarios> empresarios;
 	private ArrayList<EmpresarioNorma> codigonorma;
 	private ArrayList<EmpresarioNorma> codigonorma_novedad;
@@ -52,20 +56,63 @@ public class Pagina {
 		createPieModel1();
 		createPieModel2();
 		createPieModel3();
+		createPieModel4();
 	}
-	private void createPieModel3() {
-		ArrayList<Empresarios> empresariosTecnologia = graficossqleps("EPS-Sanitas");
-		ArrayList<Empresarios> empresariosFacturacion = graficossqleps("Aliansalud EPS");
-		ArrayList<Empresarios> empresariosContabilidad = graficossqleps("Nueva EPS");
-		ArrayList<Empresarios> empresariosComercial = graficossqleps("EPS-Sura");
-		pieModel3 = new PieChartModel();
-		pieModel3.set("EPS-Sanitas", empresariosTecnologia.size());
-		pieModel3.set("Aliansalud EPS", empresariosFacturacion.size());
-		pieModel3.set("Nueva EPS", empresariosContabilidad.size());
-		pieModel3.set("EPS-Sura", empresariosComercial.size());
-		pieModel3.setTitle("Cantidad de empleados por eps");
-		pieModel3.setLegendPosition("e");
-		pieModel3.setShadow(false);
+	public void createPieModel4() {
+		barModel4 = new BarChartModel();
+		ArrayList<Empresarios> Colpensiones = graficossqlempresariosporpension("Colpensiones");
+		ArrayList<Empresarios> Proteccion = graficossqlempresariosporpension("Proteccion");
+		ArrayList<Empresarios> Provenir = graficossqlempresariosporpension("Provenir");
+		ArrayList<Empresarios> Skandia = graficossqlempresariosporpension("Skandia");
+		ChartSeries boys = new ChartSeries();
+        boys.setLabel("Pensiones");
+        boys.set("Colpensiones", Colpensiones.size());
+        boys.set("Proteccion", Proteccion.size());
+        boys.set("Provenir", Provenir.size());
+        boys.set("Skandia", Provenir.size());
+		barModel4.addSeries(boys);
+		barModel4.setLegendPosition("e");
+		barModel4.setShadow(false);
+	}
+	private ArrayList<Empresarios> graficossqlempresariosporpension(String string) {
+		try {
+			ArrayList<Empresarios> listaOrdenada = new ArrayList<>();
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = "root";
+			String password = "";
+			ResultSet rs;
+			Connection cn = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
+			Statement stt = cn.createStatement();
+			rs = stt.executeQuery("SELECT * FROM empresarios where pensiones = '"+string+"'");
+			while (rs.next()) {
+				Empresarios empresarios = new Empresarios();
+				empresarios.setCodigo(rs.getInt("codigo"));
+				listaOrdenada.add(empresarios);
+			}
+			cn.close();
+			return listaOrdenada;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public void createPieModel3() {
+		ArrayList<Empresarios> empresariosSanitas = graficossqleps("EPS-Sanitas");
+		ArrayList<Empresarios> empresariosAliansa = graficossqleps("Aliansalud EPS");
+		ArrayList<Empresarios> empresariosNuevaEps = graficossqleps("Nueva EPS");
+		ArrayList<Empresarios> empresariosEpsSura = graficossqleps("EPS-Sura");
+		barModel3 = new BarChartModel();
+		ChartSeries boys = new ChartSeries();
+        boys.setLabel("EPS");
+        boys.set("EPS-Sanitas", empresariosSanitas.size());
+        boys.set("Aliansalud EPS", empresariosAliansa.size());
+        boys.set("Nueva EPS", empresariosNuevaEps.size());
+        boys.set("EPS-Sura", empresariosEpsSura.size());
+		barModel3.addSeries(boys);
+		barModel3.setTitle("");
+		barModel3.setLegendPosition("e");
+		barModel3.setShadow(false);
 	}
 	public void createPieModel1() {
 		ArrayList<Empresarios> empresariosTecnologia = graficossqlempresarios("Tecnologia");
@@ -148,7 +195,7 @@ public class Pagina {
 			Connection cn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
 			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios where dependencia = '"+string+"'");
+			rs = stt.executeQuery("SELECT * FROM empresarios WHERE dependencia = '"+string+"'");
 			while (rs.next()) {
 				Empresarios empresarios = new Empresarios();
 				empresarios.setCodigo(rs.getInt("codigo"));
@@ -171,7 +218,7 @@ public class Pagina {
 			Connection cn = DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
 			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM empresarios where dependencia = '"+dependencia+"' AND cargo = '"+cargo+"'");
+			rs = stt.executeQuery("SELECT * FROM empresarios WHERE dependencia = '"+dependencia+"' AND cargo = '"+cargo+"'");
 			while (rs.next()) {
 				Empresarios empresarios = new Empresarios();
 				empresarios.setCodigo(rs.getInt("codigo"));
@@ -398,98 +445,89 @@ public class Pagina {
 	public String reportesalud() {
 		return "ReporteSalud.xhtml";
 	}
-	public ArrayList<Empresarios> getEmpresarios() {
-		return empresarios;
-	}
-
-	public void setEmpresarios(ArrayList<Empresarios> empresarios) {
-		this.empresarios = empresarios;
-	}
-
 	public String getOrden() {
 		return orden;
 	}
-
-	public void setOrden(String orden) {
-		this.orden = orden;
-	}
-
 	public String getDependencia() {
 		return dependencia;
-	}
-	
-
-	public PieChartModel getPieModel2() {
-		return pieModel2;
-	}
-
-	public void setPieModel2(PieChartModel pieModel2) {
-		this.pieModel2 = pieModel2;
-	}
-
-	public void setDependencia(String dependencia) {
-		this.dependencia = dependencia;
-	}
-
-	public PieChartModel getPieModel1() {
-		return pieModel1;
-	}
-
-	public void setPieModel1(PieChartModel pieModel1) {
-		this.pieModel1 = pieModel1;
-	}
-
-	public PieChartModel getPieModel3() {
-		return pieModel3;
-	}
-	public void setPieModel3(PieChartModel pieModel3) {
-		this.pieModel3 = pieModel3;
 	}
 	public String getDependencia2() {
 		return dependencia2;
 	}
-
-	public void setDependencia2(String dependencia2) {
-		this.dependencia2 = dependencia2;
+	public String getSalud() {
+		return salud;
 	}
-
-	public ArrayList<EmpresarioNorma> getCodigonorma() {
-		return codigonorma;
-	}
-
-	public void setCodigonorma(ArrayList<EmpresarioNorma> codigonorma) {
-		this.codigonorma = codigonorma;
-	}
-
 	public String getEps() {
 		return eps;
 	}
-
-	public void setEps(String eps) {
-		this.eps = eps;
+	public PieChartModel getPieModel1() {
+		return pieModel1;
 	}
-
+	public PieChartModel getPieModel2() {
+		return pieModel2;
+	}
+	public BarChartModel getBarModel3() {
+		return barModel3;
+	}
+	public BarChartModel getBarModel4() {
+		return barModel4;
+	}
+	public ArrayList<Empresarios> getEmpresarios() {
+		return empresarios;
+	}
+	public ArrayList<EmpresarioNorma> getCodigonorma() {
+		return codigonorma;
+	}
 	public ArrayList<EmpresarioNorma> getCodigonorma_novedad() {
 		return codigonorma_novedad;
 	}
-
-	public void setCodigonorma_novedad(ArrayList<EmpresarioNorma> codigonorma_novedad) {
-		this.codigonorma_novedad = codigonorma_novedad;
-	}
-
 	public ArrayList<Peliculas> getPeliculas() {
 		return peliculas;
 	}
-
-	public void setPeliculas(ArrayList<Peliculas> peliculas) {
-		this.peliculas = peliculas;
-	}
-
 	public ArrayList<Libros> getLibros() {
 		return libros;
 	}
-
+	public void setOrden(String orden) {
+		this.orden = orden;
+	}
+	public void setDependencia(String dependencia) {
+		this.dependencia = dependencia;
+	}
+	public void setDependencia2(String dependencia2) {
+		this.dependencia2 = dependencia2;
+	}
+	public void setSalud(String salud) {
+		this.salud = salud;
+	}
+	public void setEps(String eps) {
+		this.eps = eps;
+	}
+	public void setPieModel1(PieChartModel pieModel1) {
+		this.pieModel1 = pieModel1;
+	}
+	public void setPieModel2(PieChartModel pieModel2) {
+		this.pieModel2 = pieModel2;
+	}
+	public void setBarModel3(BarChartModel barModel3) {
+		this.barModel3 = barModel3;
+	}
+	public void setBarModel4(BarChartModel barModel4) {
+		this.barModel4 = barModel4;
+	}
+	public void setEmpresarios(ArrayList<Empresarios> empresarios) {
+		this.empresarios = empresarios;
+	}
+	public void setCodigonorma(ArrayList<EmpresarioNorma> codigonorma) {
+		this.codigonorma = codigonorma;
+	}
+	public void setCodigonorma_novedad(ArrayList<EmpresarioNorma> codigonorma_novedad) {
+		this.codigonorma_novedad = codigonorma_novedad;
+	}
+	public void setPeliculas(ArrayList<Peliculas> peliculas) {
+		this.peliculas = peliculas;
+	}
 	public void setLibros(ArrayList<Libros> libros) {
 		this.libros = libros;
 	}
+	
 }

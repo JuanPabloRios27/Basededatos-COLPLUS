@@ -67,14 +67,14 @@
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia.">
 			<h:panelGrid rows="2" columns="1" cellpadding="5">
-			<p:chart type="pie" model="#{pagina.pieModel1}"
-					style="width:400px;height:300px" />
+				<p:chart type="pie" model="#{pagina.pieModel1}"
+					style="width:1200px;height:700px" />
 			</h:panelGrid>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia de cargo.">
 			<h:panelGrid rows="2" columns="3" cellpadding="5">
 				<h:outputText for="@next" value="Analizar dependencia por cargo: "></h:outputText>
-				<p:selectOneMenu id="dependencia-pie" value="#{pagina.dependencia2}"
+				<p:selectOneMenu id="Salud-pie" value="#{pagina.dependencia2}"
 					style="width:125px">
 					<f:selectItem itemLabel="Seleccione uno." itemValue="" />
 					<f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
@@ -82,10 +82,11 @@
 					<f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
 					<f:selectItem itemLabel="Comercial" itemValue="Comercial" />
 				</p:selectOneMenu>
-				<h:commandButton action="#{pagina.createPieModel2}" value="Visualizar"></h:commandButton>
-				<p:chart type="pie" model="#{pagina.pieModel2}"
-					style="width:400px;height:500px" />
+				<h:commandButton action="#{pagina.createPieModel2}"
+					value="Visualizar"></h:commandButton>
 			</h:panelGrid>
+			<p:chart type="pie" model="#{pagina.pieModel2}"
+				style="width:1200px;height:700px" />
 		</p:panel>
 	</h:form>
 </h:body>
