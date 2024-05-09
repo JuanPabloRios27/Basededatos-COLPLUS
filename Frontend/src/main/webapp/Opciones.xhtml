@@ -8,8 +8,11 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<style type="text/css">
+body{
+	background-color: #B61A1A;
+}
 .borde div {
-	background-color: #FFC1C1;
+	background-color: #FFB3B3;
 	border: #C1CCFF font-size: 16;
 	color: #000000;
 	text-align: center;
@@ -17,7 +20,8 @@
 }
 
 .fondo {
-	background-color: #AD3737;
+	border: 2px solid black;
+	background-color: #FFF4E3;
 	text-align: center;
 }
 </style>
@@ -31,25 +35,32 @@
 			style="display:block; margin-left:auto; margin-right:auto; width:30%"></p:graphicImage>
 		<p:panel
 			style="display:block; margin-left:auto; margin-right:auto; width:60%"
-			header="Col plus Solutions - Estadisticas" class="borde, fondo">
+			header="Col plus Solutions - Estadisticas" class="borde">
 			<h:panelGrid rows="2" columns="3" cellpadding="5">
-				<p:commandButton class="nuevo-boton"
+				<p:commandButton class="fondo"
 					action="#{pagina.reportenomina}" value="Reporte de Nomina"
 					style="width:227px;height:127px">
+					<f:param name="i" value="1" />
 				</p:commandButton>
 				<p:commandButton action="#{pagina.reporteEmpresarial}"
 					value="Reporte de información empresarial"
 					style="width:227px;height:127px">
+					<f:param name="i" value="2" />
 				</p:commandButton>
 				<p:commandButton action="#{pagina.reportesalud}"
-					value="Reporte de salud y pension" style="width:227px;height:127px">
+					value="Reporte de salud y pension" 
+					style="width:227px;height:127px">
+					<f:param name="i" value="3" />
 				</p:commandButton>
 				<p:commandButton action="#{pagina.reportenovedad}"
-					value="Reporte de novedades" style="width:227px;height:127px">
+					value="Reporte de novedades" 
+					style="width:227px;height:127px">
+					<f:param name="i" value="4" />
 				</p:commandButton>
 				<p:commandButton action="#{pagina.opcionesentretenimiento}"
 					value="Reporte de base de entretenimiento"
 					style="width:227px;height:127px">
+					<f:param name="i" value="5" />
 				</p:commandButton>
 				<p:commandButton value="Imprimir documento"
 					style="width:227px;height:127px">

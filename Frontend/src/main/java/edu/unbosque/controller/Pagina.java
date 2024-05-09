@@ -370,7 +370,12 @@ public class Pagina {
 				empresario.setCargo(rs.getNString("cargo"));
 				empresario.setPensiones(rs.getNString("pensiones"));
 				empresario.setSueldo(rs.getFloat("sueldo"));
-				empresario.setFecha(rs.getNString("fecha"));
+				String fecha= rs.getNString("fecha");
+				String año = fecha.substring(0, 4);
+				String mes = fecha.substring(4, 6);
+				String dia = fecha.substring(6, 8);
+				String fechaformato = año + "/"+mes+"/"+dia;
+				empresario.setFecha(fechaformato);
 				empresario.setNovedad_antes(rs.getBoolean("novedad_antes"));
 				empresario.setNovedad_antes(rs.getBoolean("novedad_despues"));
 				listaOrdenada.add(empresario);

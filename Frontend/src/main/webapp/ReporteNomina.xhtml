@@ -9,10 +9,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<style type="text/css">
+body{
+	background-color: #B61A1A;
+}
 .ui-g div {
-	background-color: #ededed;
+	color: #000000;
 	text-align: center;
-	border: 1px solid #fafafa;
 }
 
 .center-panel {
@@ -28,8 +30,29 @@
 </h:head>
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<p:tabMenu activeIndex="#{param.i}" style="background-color:black">
+		<p:menuitem value="⭠" outcome="Opciones">
+			<f:param name="i" value="0" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por empleo." outcome="ReporteNomina">
+			<f:param name="i" value="1" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por eps." outcome="ReporteSalud">
+			<f:param name="i" value="2" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por nomina." outcome="ReporteEmpresarial">
+			<f:param name="i" value="3" />
+		</p:menuitem>
+		<p:menuitem value="Analizar Novedades." outcome="ReporteNovedades">
+			<f:param name="i" value="4" />
+		</p:menuitem>
+		<p:menuitem value="Buscar productos propios."
+			outcome="OpcionesEntretenimiento">
+			<f:param name="i" value="5" />
+		</p:menuitem>
+	</p:tabMenu>
 	<h:form>
-		<p:panel header="Opciones de ordenamiento">
+		<p:panel header="Opciones de ordenamiento"  >
 			<h:panelGrid rows="1" columns="7" cellpadding="5">
 				<h:outputText for="@next" value="Ordenar por: "></h:outputText>
 				<p:selectOneMenu id="orden" value="#{pagina.orden}"
@@ -51,18 +74,28 @@
 				<p:selectOneMenu id="cargo" value="#{pagina.cargo}"
 					style="width:125px">
 					<f:selectItem itemLabel="Seleccione" itemValue="*" />
-					<f:selectItem itemLabel="Ingeniero de Desarrollo" itemValue="Ingeniero de Desarrollo" />
-					<f:selectItem itemLabel="Auxiliar especializado" itemValue="Auxiliar especializado" />
-					<f:selectItem itemLabel="Director de Impuestos" itemValue="Director de Impuestos" />
-					<f:selectItem itemLabel="Gerente de ventas" itemValue="Gerente de ventas" />
-					<f:selectItem itemLabel ="DBA" itemValue="DBA"/>
-					<f:selectItem itemLabel ="Ingeniero de Soporte" itemValue="Ingeniero de Soporte"/>
-					<f:selectItem itemLabel ="Director de Facturacion" itemValue="Director de Facturacion"/>
-					<f:selectItem itemLabel ="Director de cartera" itemValue="Director de cartera"/>
-					<f:selectItem itemLabel ="Director de costos" itemValue="Director de costos"/>
-					<f:selectItem itemLabel ="Auditor interno" itemValue="Auditor interno"/>
-					<f:selectItem itemLabel ="Lider de infraestructura" itemValue="Lider de infraestructura"/>
-					<f:selectItem itemLabel ="Lider de QA" itemValue="Lider de QA"/>
+					<f:selectItem itemLabel="Ingeniero de Desarrollo"
+						itemValue="Ingeniero de Desarrollo" />
+					<f:selectItem itemLabel="Auxiliar especializado"
+						itemValue="Auxiliar especializado" />
+					<f:selectItem itemLabel="Director de Impuestos"
+						itemValue="Director de Impuestos" />
+					<f:selectItem itemLabel="Gerente de ventas"
+						itemValue="Gerente de ventas" />
+					<f:selectItem itemLabel="DBA" itemValue="DBA" />
+					<f:selectItem itemLabel="Ingeniero de Soporte"
+						itemValue="Ingeniero de Soporte" />
+					<f:selectItem itemLabel="Director de Facturacion"
+						itemValue="Director de Facturacion" />
+					<f:selectItem itemLabel="Director de cartera"
+						itemValue="Director de cartera" />
+					<f:selectItem itemLabel="Director de costos"
+						itemValue="Director de costos" />
+					<f:selectItem itemLabel="Auditor interno"
+						itemValue="Auditor interno" />
+					<f:selectItem itemLabel="Lider de infraestructura"
+						itemValue="Lider de infraestructura" />
+					<f:selectItem itemLabel="Lider de QA" itemValue="Lider de QA" />
 				</p:selectOneMenu>
 				<h:commandButton value="Ordenar" action="#{pagina.ordenarEnMySQL}"></h:commandButton>
 			</h:panelGrid>
@@ -84,8 +117,8 @@
 			</p:dataTable>
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia.">
-				<p:chart type="pie" model="#{pagina.pieModel1}"
-					style="width:90%;height:700px" />
+			<p:chart type="pie" model="#{pagina.pieModel1}"
+				style="width:90%;height:700px" />
 		</p:panel>
 		<p:panel header="Cantidad de empleados por dependencia de cargo.">
 			<p:chart type="bar" model="#{pagina.barModel}"

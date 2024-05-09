@@ -8,13 +8,16 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<style type="text/css">
+body{
+	background-color: #B61A1A;
+}
 .ui-g div {
-	background-color: #2C366E;
+	background-color: #FFB3B3;
 	text-align: center;
 }
 
 .ui-a div {
-	background-color: #C1CCFF;
+	background-color: #FFB3B3;
 	border: #C1CCFF font-size: 16;
 	color: #000000;
 	text-align: center;
@@ -32,14 +35,38 @@
 </h:head>
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<p:tabMenu activeIndex="#{param.i}">
+		<p:menuitem value="⭠" outcome="Opciones">
+			<f:param name="i" value="0" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por empleo." outcome="ReporteNomina">
+			<f:param name="i" value="1" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por eps." outcome="ReporteSalud">
+			<f:param name="i" value="2" />
+		</p:menuitem>
+		<p:menuitem value="Empleados por nomina." outcome="ReporteEmpresarial">
+			<f:param name="i" value="3" />
+		</p:menuitem>
+		<p:menuitem value="Analizar Novedades." outcome="ReporteNovedades">
+			<f:param name="i" value="4" />
+		</p:menuitem>
+		<p:menuitem value="Buscar productos propios."
+			outcome="OpcionesEntretenimiento">
+			<f:param name="i" value="5" />
+		</p:menuitem>
+	</p:tabMenu>
 	<h:form>
-		<p:panel class="ui-a center-panel" header="Seleccione el tipo de informacion de los productos.">
+		<p:panel class="ui-a" header="Seleccione el tipo de informacion de los productos."
+		style="display:block; margin-left:auto; margin-right:auto; width:40%">
 			<h:panelGrid rows="1" columns="2">
 				<p:commandButton action="#{pagina.reportentreteniminetopeliculas}" value="Peliculas" 
-					style="margin-right:10px;width:227px;height:127px">
+					style="width:227px;height:127px">
+					<f:param name="i" value="5" />
 				</p:commandButton>
 				<p:commandButton action="#{pagina.reportentreteniminetolibros}" value="Libros" 
-					style="margin-right:10px;width:227px;height:127px">
+					style="width:227px;height:127px">
+					<f:param name="i" value="5" />
 				</p:commandButton>
 			</h:panelGrid>
 		</p:panel>
