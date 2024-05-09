@@ -8,12 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<style type="text/css">
-.ui-g div {
-	background-color: #2C366E;
-	text-align: center;
-}
-
-.ui-a div {
+.borde div {
 	background-color: #FFC1C1;
 	border: #C1CCFF font-size: 16;
 	color: #000000;
@@ -21,11 +16,10 @@
 	border: 1px solid #fafafa;
 }
 
-.center-panel {
-	width: 60%;
-	margin: 20%;
+.fondo {
+	background-color: #AD3737;
+	text-align: center;
 }
-
 </style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Base de datos COL+</title>
@@ -33,25 +27,32 @@
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
 	<h:form>
-		<p:panel class="ui-a center-panel" header="Col plus Solutions - Estadisticas">
+		<p:graphicImage url="images/logo.png"
+			style="display:block; margin-left:auto; margin-right:auto; width:30%"></p:graphicImage>
+		<p:panel
+			style="display:block; margin-left:auto; margin-right:auto; width:60%"
+			header="Col plus Solutions - Estadisticas" class="borde, fondo">
 			<h:panelGrid rows="2" columns="3" cellpadding="5">
-				<p:commandButton action="#{pagina.reportenomina}" value="Reporte de Nomina" 
-					style="margin-right:10px;width:227px;height:127px">
+				<p:commandButton class="nuevo-boton"
+					action="#{pagina.reportenomina}" value="Reporte de Nomina"
+					style="width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reporteEmpresarial}" value="Reporte de información empresarial" 
-					style="margin-right:10px;width:227px;height:127px">
+				<p:commandButton action="#{pagina.reporteEmpresarial}"
+					value="Reporte de información empresarial"
+					style="width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reportesalud}" value="Reporte de salud y pension"
-					style="margin-right:10px;width:227px;height:127px">
+				<p:commandButton action="#{pagina.reportesalud}"
+					value="Reporte de salud y pension" style="width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reportenovedad}" value="Reporte de novedades"
-					style="margin-right:10px;width:227px;height:127px">
+				<p:commandButton action="#{pagina.reportenovedad}"
+					value="Reporte de novedades" style="width:227px;height:127px">
 				</p:commandButton>
-				<p:commandButton action="#{pagina.opcionesentretenimiento}" value="Reporte de base de entretenimiento"
-					style="margin-right:10px;width:227px;height:127px">
+				<p:commandButton action="#{pagina.opcionesentretenimiento}"
+					value="Reporte de base de entretenimiento"
+					style="width:227px;height:127px">
 				</p:commandButton>
 				<p:commandButton value="Imprimir documento"
-					style="margin-right:10px;width:227px;height:127px">
+					style="width:227px;height:127px">
 				</p:commandButton>
 			</h:panelGrid>
 		</p:panel>
