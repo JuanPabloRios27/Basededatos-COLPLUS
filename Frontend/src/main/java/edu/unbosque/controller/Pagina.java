@@ -9,10 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
 import org.json.simple.parser.ParseException;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
@@ -36,14 +40,18 @@ public class Pagina {
 	private PolarAreaChartModel polarAreaModel2;
 	private String dependencia2="Tecnologia";
 	private int codigo;
+	private int id_pelicula;
 	private String nombre;
 	private String pension;
 	private String salud;
 	private float sueldo;
 	private String cargo;
 	private String eps;
+	private String[] genero;
+	private int anio;
 	private PieChartModel pieModel1;
 	private BarChartModel barModel;
+	private String[] generos = {"Adventure","Animation","Children","Comedy","Fantasy","Romance"};
 	private ArrayList<Empresarios> empresarios;
 	private ArrayList<EmpresarioNorma> codigonorma;
 	private ArrayList<EmpresarioNorma> codigonorma_novedad;
@@ -57,6 +65,7 @@ public class Pagina {
 			peliculas = createSQLpeliculas();
 			libros = createSQLlibros();
 			codigo = empresarios.get(empresarios.size()-1).getCodigo()+1;
+			id_pelicula = peliculas.get(peliculas.size()-1).getCodigo()+1;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -382,6 +391,8 @@ public class Pagina {
 				empresario.setFecha(fechaformato);
 				empresario.setNovedad_antes(rs.getBoolean("novedad_antes"));
 				empresario.setNovedad_antes(rs.getBoolean("novedad_despues"));
+				empresario.setBonificacion(rs.getDouble("bonificacion"));
+				empresario.setTransporte(rs.getDouble("transporte"));
 				listaOrdenada.add(empresario);
 			}
 			cn.close();
@@ -456,11 +467,32 @@ public class Pagina {
 			e.printStackTrace();
 		}
 	}
+	public String crearpel() {
+		return "PeliculasAdd.xhtml";
+	}
 	public String crearemp() {
 		return "EmpresariosAdd.xhtml";
 	}
+	public String peliculaid() {
+		return String.valueOf(id_pelicula);
+	}
 	public String codigo() {
 		return String.valueOf(codigo);
+	}
+	public String peliculaadd() {
+		Peliculas pelicula = new Peliculas();
+		pelicula.setCodigo(codigo);
+		pelicula.setNombre(nombre);
+		pelicula.setAnio(anio);
+		pelicula.setGenero("");
+		peliculas.add(pelicula);
+		try {
+			PeliculasJSON.postJSON(pelicula);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "AthenaOpciones.xhtml";
 	}
 	public String empresarioadd() {
 		Empresarios empresario = new Empresarios();
@@ -475,6 +507,8 @@ public class Pagina {
 		empresario.setArl("Positiva");
 		empresario.setFecha("20240512");
 		nomina.setCodigo(codigo);
+		nomina.setBonificacion(sueldo*0.00005);
+		nomina.setTransporte(sueldo*0.000025);
 		empresarios.add(empresario);
 		try {
 			EmpresariosJSON.postJSON(empresario);
@@ -520,6 +554,18 @@ public class Pagina {
 	}
 	public String getEps() {
 		return eps;
+	}
+	public int getId_pelicula() {
+		return id_pelicula;
+	}
+	public int getAnio() {
+		return anio;
+	}
+	public void setId_pelicula(int id_pelicula) {
+		this.id_pelicula = id_pelicula;
+	}
+	public void setAnio(int anio) {
+		this.anio = anio;
 	}
 	public PieChartModel getPieModel1() {
 		return pieModel1;
@@ -620,6 +666,16 @@ public class Pagina {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	
-	
+	public String[] getGenero() {
+		return genero;
+	}
+	public void setGenero(String[] genero) {
+		this.genero = genero;
+	}
+	public String[] getGeneros() {
+		return generos;
+	}
+	public void setGeneros(String[] generos) {
+		this.generos = generos;
+	}
 }

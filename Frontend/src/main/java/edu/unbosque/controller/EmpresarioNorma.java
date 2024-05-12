@@ -7,7 +7,25 @@ public class EmpresarioNorma extends Empresarios{
 	private String fecha_final;
 	private String inicio_vacaciones;
 	private String final_vacaciones;
+	private double bonificacion;
+	private double transporte;
 	
+	public double getBonificacion() {
+		return bonificacion;
+	}
+
+	public double getTransporte() {
+		return transporte;
+	}
+
+	public void setBonificacion(double bonificacion) {
+		this.bonificacion = bonificacion;
+	}
+
+	public void setTransporte(double transporte) {
+		this.transporte = transporte;
+	}
+
 	public boolean isNovedad_antes() {
 		return novedad_antes;
 	}

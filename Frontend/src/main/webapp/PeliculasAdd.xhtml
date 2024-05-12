@@ -54,56 +54,19 @@ body {
 		</p:menuitem>
 	</p:tabMenu>
 		<p:panel header="Registro de empleados." class="borde">
-		<h:panelGrid columns="2" rows="8">
-		<p:outputLabel value="Codigo: " for="Codigo"></p:outputLabel>
-		<p:autoComplete id="Codigo" value="#{pagina.codigo()}" disabled="true"></p:autoComplete>
+		<h:panelGrid columns="2" rows="5">
+		<p:outputLabel value="Codigo: " for="Id"></p:outputLabel>
+		<p:autoComplete id="Id" value="#{pagina.peliculaid()}" disabled="true"></p:autoComplete>
 		<p:outputLabel value="Nombre: " for="Nombre"></p:outputLabel>
 		<p:autoComplete id="Nombre" value="#{pagina.nombre}"></p:autoComplete>
-		<p:outputLabel value="cargo:"></p:outputLabel>
-		<p:selectOneMenu id="cargo" value="#{pagina.cargo}" style="width:200px">
-            <f:selectItem itemLabel="Seleccione una: " itemValue="" />
-            <f:selectItem itemLabel="Ingeniero de Desarrollo" itemValue="Ingeniero de Desarrollo" />
-            <f:selectItem itemLabel="Auxiliar especializado" itemValue="Auxiliar especializado" />
-            <f:selectItem itemLabel="Director de Impuestos" itemValue="Director de Impuestos" />
-            <f:selectItem itemLabel="Gerente de ventas" itemValue="Gerente de ventas" />
-            <f:selectItem itemLabel="Director de Facturacion" itemValue="Director de Facturacion" />
-            <f:selectItem itemLabel="Ingeniero de Soporte" itemValue="Ingeniero de Soporte" />
-            <f:selectItem itemLabel="DBA" itemValue="DBA" />
-            <f:selectItem itemLabel="Auditor interno" itemValue="Auditor interno" />
-            <f:selectItem itemLabel="Director de presupuestos" itemValue="Director de presupuestos" />
-            <f:selectItem itemLabel="Lider de infraestructura" itemValue="Lider de infraestructura" />
-            <f:selectItem itemLabel="Auditor interno" itemValue="Auditor interno" />
-            <f:selectItem itemLabel="Lider de QA" itemValue="Lider de QA" />
-        </p:selectOneMenu>
-		<p:outputLabel value="dependencia:"></p:outputLabel>
-		<p:selectOneMenu id="dependencia" value="#{pagina.dependencia}" style="width:200px">
-            <f:selectItem itemLabel="Seleccione una: " itemValue="" />
-            <f:selectItem itemLabel="Tecnologia" itemValue="Tecnologia" />
-            <f:selectItem itemLabel="Facturacion" itemValue="Facturacion" />
-            <f:selectItem itemLabel="Contabilidad" itemValue="Contabilidad" />
-            <f:selectItem itemLabel="Comercial" itemValue="Comercial" />
-        </p:selectOneMenu>
-        <p:outputLabel value="EPS:"></p:outputLabel>
-		<p:selectOneMenu id="eps" value="#{pagina.eps}" style="width:200px">
-            <f:selectItem itemLabel="Seleccione una: " itemValue="" />
-            <f:selectItem itemLabel="EPS-Sanitas" itemValue="EPS-Sanitas" />
-            <f:selectItem itemLabel="Aliansalud EPS" itemValue="Aliansalud EPS" />
-            <f:selectItem itemLabel="Nueva EPS" itemValue="Nueva EPS" />
-            <f:selectItem itemLabel="EPS-Sura" itemValue="EPS-Sura" />
-        </p:selectOneMenu>
-        <p:outputLabel value="Pensiones:"></p:outputLabel>
-		<p:selectOneMenu id="Pensiones" value="#{pagina.pension}" style="width:200px">
-            <f:selectItem itemLabel="Seleccione una: " itemValue="" />
-            <f:selectItem itemLabel="Colpensiones" itemValue="Colpensiones" />
-            <f:selectItem itemLabel="Proteccion" itemValue="Proteccion" />
-            <f:selectItem itemLabel="Provenir" itemValue="Provenir" />
-            <f:selectItem itemLabel="Skandia" itemValue="Skandia" />
-        </p:selectOneMenu>
-        <p:outputLabel value="sueldo"></p:outputLabel>
-        <p:inputNumber id="sueldo" value="#{pagina.sueldo}" symbol=" $"
-                               decimalSeparator="," thousandSeparator=".">    
-        </p:inputNumber> 
-        <p:commandButton value="Crear" action="#{pagina.empresarioadd()}"></p:commandButton>
+		<p:outputLabel value="Año" for="anio"></p:outputLabel>
+		<p:inputNumber id="anio" value="#{pagina.anio}"></p:inputNumber>
+		<h:outputLabel for="Genero" value="Genero:" />
+        <p:selectCheckboxMenu id="Genero" value="#{pagina.genero}" label="''" multiple="true"
+                              filter="true" filterMatchMode="startsWith">
+            <f:selectItems value="#{pagina.generos}" />
+        </p:selectCheckboxMenu>
+        <p:commandButton value="Crear" action="#{pagina.peliculaadd()}"></p:commandButton>
 		</h:panelGrid>
 		</p:panel>
 	</h:form>

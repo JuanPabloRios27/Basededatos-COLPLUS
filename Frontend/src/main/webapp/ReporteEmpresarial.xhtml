@@ -9,9 +9,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<style type="text/css">
-body{
+body {
 	background-color: #B61A1A;
 }
+
 .ui-g div {
 	background-color: #ededed;
 	text-align: center;
@@ -32,27 +33,28 @@ body{
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
 	<h:form>
-	<p:tabMenu activeIndex="#{param.i}">
-		<p:menuitem value="⭠" outcome="AthenaHome">
-			<f:param name="i" value="0" />
-		</p:menuitem>
-		<p:menuitem value="Empleados por empleo." outcome="ReporteNomina">
-			<f:param name="i" value="1" />
-		</p:menuitem>
-		<p:menuitem value="Empleados por eps." outcome="ReporteSalud">
-			<f:param name="i" value="2" />
-		</p:menuitem>
-		<p:menuitem value="Empleados por nomina." outcome="ReporteEmpresarial">
-			<f:param name="i" value="3" />
-		</p:menuitem>
-		<p:menuitem value="Analizar Novedades." outcome="ReporteNovedades">
-			<f:param name="i" value="4" />
-		</p:menuitem>
-		<p:menuitem value="Buscar productos propios."
-			outcome="OpcionesEntretenimiento">
-			<f:param name="i" value="5" />
-		</p:menuitem>
-	</p:tabMenu>
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="⭠" outcome="AthenaHome">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+			<p:menuitem value="Empleados por empleo." outcome="ReporteNomina">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+			<p:menuitem value="Empleados por eps." outcome="ReporteSalud">
+				<f:param name="i" value="2" />
+			</p:menuitem>
+			<p:menuitem value="Empleados por nomina."
+				outcome="ReporteEmpresarial">
+				<f:param name="i" value="3" />
+			</p:menuitem>
+			<p:menuitem value="Analizar Novedades." outcome="ReporteNovedades">
+				<f:param name="i" value="4" />
+			</p:menuitem>
+			<p:menuitem value="Buscar productos propios."
+				outcome="OpcionesEntretenimiento">
+				<f:param name="i" value="5" />
+			</p:menuitem>
+		</p:tabMenu>
 		<p:panel header="Lista de empleados de la empresa">
 			<h:panelGrid columns="2">
 				<p:dataTable value="#{pagina.codigonorma}" var="codigonorma">
@@ -83,6 +85,12 @@ body{
 					<p:column headerText="Alguna novedad presente?">
         #{codigonorma.novedad_despues}
         </p:column>
+					<p:column headerText="Bonificación">
+            $ #{codigonorma.bonificacion}
+            </p:column>
+					<p:column headerText="Transporte">
+            $ #{codigonorma.transporte}
+            </p:column>
 				</p:dataTable>
 			</h:panelGrid>
 		</p:panel>
