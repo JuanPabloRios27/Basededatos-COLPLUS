@@ -35,8 +35,11 @@ public class Pagina {
 	private PolarAreaChartModel polarAreaModel;
 	private PolarAreaChartModel polarAreaModel2;
 	private String dependencia2="Tecnologia";
+	private int codigo;
+	private String nombre;
 	private String pension;
 	private String salud;
+	private float sueldo;
 	private String cargo;
 	private String eps;
 	private PieChartModel pieModel1;
@@ -53,6 +56,7 @@ public class Pagina {
 			codigonorma_novedad = createSQLnovedad();
 			peliculas = createSQLpeliculas();
 			libros = createSQLlibros();
+			codigo = empresarios.get(empresarios.size()-1).getCodigo()+1;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -408,6 +412,7 @@ public class Pagina {
 				empresario.setCargo(rs.getNString("cargo"));
 				empresario.setPensiones(rs.getNString("pensiones"));
 				empresario.setSueldo(rs.getFloat("sueldo"));
+				empresario.setArl("Positiva");
 				listaOrdenada.add(empresario);
 			}
 			setEmpresarios(listaOrdenada);
@@ -453,6 +458,32 @@ public class Pagina {
 	}
 	public String crearemp() {
 		return "EmpresariosAdd.xhtml";
+	}
+	public String codigo() {
+		return String.valueOf(codigo);
+	}
+	public String empresarioadd() {
+		Empresarios empresario = new Empresarios();
+		Nomina nomina = new Nomina();
+		empresario.setCodigo(codigo);
+		empresario.setNombre(nombre);
+		empresario.setCargo(cargo);
+		empresario.setDependencia(dependencia);
+		empresario.setEps(eps);
+		empresario.setPensiones(pension);
+		empresario.setSueldo(sueldo);
+		empresario.setArl("Positiva");
+		empresario.setFecha("20240512");
+		nomina.setCodigo(codigo);
+		empresarios.add(empresario);
+		try {
+			EmpresariosJSON.postJSON(empresario);
+			NominaJSON.postJSON(nomina);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "AthenaOpciones.xhtml";
 	}
 	public String opcionesentretenimiento() {
 		return "OpcionesEntretenimiento.xhtml";
@@ -571,4 +602,24 @@ public class Pagina {
 	public void setBarModel(BarChartModel barModel) {
 		this.barModel = barModel;
 	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public float getSueldo() {
+		return sueldo;
+	}
+	public void setSueldo(float sueldo) {
+		this.sueldo = sueldo;
+	}
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	
+	
 }
