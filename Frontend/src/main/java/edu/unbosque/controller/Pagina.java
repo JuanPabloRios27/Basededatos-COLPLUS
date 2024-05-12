@@ -59,10 +59,10 @@ public class Pagina {
 	private ArrayList<Libros> libros;
 	public Pagina() {
 		try {
+			peliculas = PeliculasJSON.getJSON();
 			empresarios = EmpresariosJSON.getJSON();
 			codigonorma = createSQLEmpNo();
 			codigonorma_novedad = createSQLnovedad();
-			peliculas = createSQLpeliculas();
 			libros = createSQLlibros();
 			codigo = empresarios.get(empresarios.size()-1).getCodigo()+1;
 			id_pelicula = peliculas.get(peliculas.size()-1).getCodigo()+1;
@@ -481,10 +481,14 @@ public class Pagina {
 	}
 	public String peliculaadd() {
 		Peliculas pelicula = new Peliculas();
-		pelicula.setCodigo(codigo);
+		pelicula.setCodigo(id_pelicula);
 		pelicula.setNombre(nombre);
 		pelicula.setAnio(anio);
-		pelicula.setGenero("");
+		String gen="";
+		for(int i=0;i<genero.length;i++) {
+			gen+=genero[i]+"|";
+		}
+		pelicula.setGenero(gen);
 		peliculas.add(pelicula);
 		try {
 			PeliculasJSON.postJSON(pelicula);
