@@ -30,7 +30,7 @@ body {
 }
 </style>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Bienvenidos a Athena Website</title>
+	<title>Registros</title>
 </h:head>
 <h:body>
 	<p:growl id="mensajes" showDetail="true" life="2000" />
@@ -43,19 +43,18 @@ body {
 			</f:facet>
 		</p:menubar>
 		<p:tabMenu activeIndex="#{param.i}">
-		<p:menuitem value="Inicio" outcome="AthenaHome">
+		<p:menuitem value="Empresarios" outcome="AthenaHome">
 			<f:param name="i" value="0" />
 		</p:menuitem>
-		<p:menuitem value="Visualizacion" outcome="AthenaVisualizacion">
+		<p:menuitem value="Libros" outcome="AthenaVisualizacion">
 			<f:param name="i" value="1" />
 		</p:menuitem>
-		<p:menuitem value="Ajustes." outcome="AthenaOpciones">
+		<p:menuitem value="Peliculas." outcome="AthenaOpciones">
 			<f:param name="i" value="2" />
 		</p:menuitem>
 	</p:tabMenu>
-		<p:panel header="Damos la bienvenida a Athena Website." class="borde">
+		<p:panel header="Registro de empleados." class="borde">
 		<h:panelGrid>
-		<p:graphicImage url="images/Nature.gif" style="width: 150%; height: 80%;"></p:graphicImage>
 		</h:panelGrid>
 		</p:panel>
 	</h:form>

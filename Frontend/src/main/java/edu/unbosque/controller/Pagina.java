@@ -451,6 +451,9 @@ public class Pagina {
 			e.printStackTrace();
 		}
 	}
+	public String crearemp() {
+		return "EmpresariosAdd.xhtml";
+	}
 	public String opcionesentretenimiento() {
 		return "OpcionesEntretenimiento.xhtml";
 	}
