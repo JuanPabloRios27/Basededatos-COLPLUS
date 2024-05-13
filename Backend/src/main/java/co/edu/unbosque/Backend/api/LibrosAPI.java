@@ -34,8 +34,8 @@ public class LibrosAPI {
 	public void actualizar(@RequestBody Libros libros) {
 		librosDAO.save(libros);
 	}
-	@DeleteMapping("/eliminar{codigo}")
-	public void eliminar(@PathVariable("Id_libro") long id){
+	@DeleteMapping("/eliminar/{codigo}")
+	public void eliminar(@PathVariable("codigo") long id){
 		librosDAO.deleteById(id);
 	}
 

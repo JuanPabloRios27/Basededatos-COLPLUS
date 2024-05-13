@@ -449,6 +449,40 @@ public class Pagina {
 			e.printStackTrace();
 		}
 	}
+	public String eliminarpel(int codigo) {
+		try {
+			PeliculasJSON.eliminar(codigo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "AthenaHome.xhtml";
+	}
+	public String eliminarlib(int codigo) {
+		try {
+			LibrosJSON.eliminar(codigo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "AthenaHome.xhtml";
+	}
+	public String eliminaremp(int codigo) {
+		try {
+			EmpresariosJSON.eliminar(codigo);
+			NominaJSON.eliminar(codigo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "AthenaHome.xhtml";
+	}
+	public String editaremp() {
+		return "EmpresariosEdd.xhtml";
+	}
 	public String crearpel() {
 		return "PeliculasAdd.xhtml";
 	}

@@ -33,8 +33,8 @@ public class EmpresariosAPI {
 	public void actualizar(@RequestBody Empresarios empresarios) {
 		empresarioDAO.save(empresarios);
 	}
-	@DeleteMapping("/eliminar{codigo}")
-	public void eliminar(@PathVariable("Codigo") Integer id){
+	@DeleteMapping("/eliminar/{codigo}")
+	public void eliminar(@PathVariable("codigo") Integer id){
 		empresarioDAO.deleteById(id);
 	}
 }

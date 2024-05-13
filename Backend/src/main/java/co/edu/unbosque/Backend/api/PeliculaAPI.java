@@ -29,8 +29,8 @@ public class PeliculaAPI {
 	public List<Peliculas> listar(){
 		return peliculaDAO.findAll();
 	}
-	@DeleteMapping("/eliminar{codigo}")
-	public void eliminar(@PathVariable("Codigo") Integer id){
+	@DeleteMapping("/eliminar/{codigo}")
+	public void eliminar(@PathVariable("codigo") Integer id){
 		peliculaDAO.deleteById(id);
 	}
 	@PutMapping("/actualizar")

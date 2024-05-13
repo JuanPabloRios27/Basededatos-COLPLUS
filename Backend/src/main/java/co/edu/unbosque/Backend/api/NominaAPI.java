@@ -31,7 +31,7 @@ public class NominaAPI {
 	public void actualizar(@RequestBody Nomina nomina) {
 		nominaDAO.save(nomina);
 	}
-	@DeleteMapping("/eliminar{codigo}")
+	@DeleteMapping("/eliminar/{codigo}")
 	public void eliminar(@PathVariable("codigo") int id){
 		nominaDAO.deleteById(id);
 	}
