@@ -58,18 +58,17 @@ body {
 				<f:param name="i" value="2" />
 			</p:menuitem>
 		</p:tabMenu>
-		<p:panel header="Registro de empleados." class="borde">
+		<p:panel header="Ajustes." class="borde">
 			<h:panelGrid columns="2">
-				<p:dataTable value="#{pagina.codigonorma}" var="codigonorma">
+				<p:dataTable value="#{pagina.peliculas}" var="peliculas">
 					<p:column headerText="Código">
-            #{codigonorma.codigo}
+            #{peliculas.codigo}
         </p:column>
 					<p:column headerText="Nombre">
-					#{codigonorma.nombre}
+            #{peliculas.nombre}
         </p:column>
 					<p:column headerText="Ajustes">
-						<p:commandButton value="Eliminar"
-							action="#{pagina.eliminaremp(codigonorma.codigo)}"></p:commandButton>
+						<p:commandButton value="Eliminar" action="#{pagina.eliminarpel(peliculas.codigo)}"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</h:panelGrid>

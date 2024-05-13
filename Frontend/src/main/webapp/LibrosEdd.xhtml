@@ -60,16 +60,16 @@ body {
 		</p:tabMenu>
 		<p:panel header="Registro de empleados." class="borde">
 			<h:panelGrid columns="2">
-				<p:dataTable value="#{pagina.codigonorma}" var="codigonorma">
+				<p:dataTable value="#{pagina.libros}" var="libro">
 					<p:column headerText="Código">
-            #{codigonorma.codigo}
+					#{libro.id_libro}
+
         </p:column>
-					<p:column headerText="Nombre">
-					#{codigonorma.nombre}
+					<p:column headerText="Titulo">
+					#{libro.titulo}
         </p:column>
 					<p:column headerText="Ajustes">
-						<p:commandButton value="Eliminar"
-							action="#{pagina.eliminaremp(codigonorma.codigo)}"></p:commandButton>
+						<p:commandButton value="Eliminar" action="#{pagina.eliminarlib(libro.id_libro)}"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</h:panelGrid>

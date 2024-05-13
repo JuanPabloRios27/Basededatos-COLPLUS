@@ -108,9 +108,9 @@ public class NominaJSON {
 		http.disconnect();
 	}
 	public static void editar() throws IOException, ParseException{
-		url = new URL(sitio+"Empresarios/editar/");
+		url = new URL(sitio+"Nomina/actualizar");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
-		http.setRequestMethod("DELETE");
+		http.setRequestMethod("PUT");
 		http.setRequestProperty("Accept", "application/json");
 		InputStream respuesta = http.getInputStream();
 		byte[] inp = respuesta.readAllBytes();

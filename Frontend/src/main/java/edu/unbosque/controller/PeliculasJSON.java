@@ -84,7 +84,7 @@ public class PeliculasJSON {
 		return respuesta;
 	}
 	public static void eliminar(int cedula) throws IOException, ParseException{
-		url = new URL(sitio+"peliculas/eliminar/"+cedula);
+		url = new URL(sitio+"Pelicula/eliminar/"+cedula);
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
 		http.setRequestMethod("DELETE");
 		http.setRequestProperty("Accept", "application/json");

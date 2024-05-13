@@ -106,10 +106,11 @@ public class EmpresariosJSON {
 		http.disconnect();
 	}
 	public static void editar() throws IOException, ParseException{
-		url = new URL(sitio+"Empresarios/editar/");
+		url = new URL(sitio+"Empresarios/actualizar");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
-		http.setRequestMethod("DELETE");
-		http.setRequestProperty("Accept", "application/json");
+		http.setRequestMethod("PUT");
+		http.setRequestProperty("Content-Type", "application/json");
+		http.setDoOutput(true);
 		InputStream respuesta = http.getInputStream();
 		byte[] inp = respuesta.readAllBytes();
 		String json = "";

@@ -85,15 +85,25 @@ body {
 					style="width:360%; text-align:left">
 					<f:param name="i" value="1" />
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reporteEmpresarial}"
-					value="Peliculas"
+				<p:commandButton action="#{pagina.editarlib}"
+					value="Libros"
 					style="width:360%; text-align:left">
 					<f:param name="i" value="2" />
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reportesalud}"
-					value="Libros" 
+				<p:commandButton action="#{pagina.editarpel}"
+					value="Peliculas" 
 					style="width:360%; text-align:left">
 					<f:param name="i" value="3" />
+				</p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+		<p:panel
+			header="Manejo Tecnico:" class="borde">
+			<h:panelGrid columns="1" cellpadding="5">
+				<p:commandButton class="fondo"
+					action="#{pagina.lenguajessql}" value="Edicion tecnica- Lenguaje SQL."
+					style="width:360%; text-align:left">
+					<f:param name="i" value="1" />
 				</p:commandButton>
 			</h:panelGrid>
 		</p:panel>

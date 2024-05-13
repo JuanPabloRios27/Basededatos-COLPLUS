@@ -16,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.json.simple.parser.ParseException;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
@@ -47,6 +48,7 @@ public class Pagina {
 	private String autores;
 	private String salud;
 	private float sueldo;
+	private String lenguajesql;
 	private String cargo;
 	private String lenguaje;
 	private String editorial;
@@ -88,6 +90,31 @@ public class Pagina {
 		createPolarAreaModel();
 		createPolarAreaModel2();
 	}
+	public List<String> completeArea(String query) {
+        List<String> results = new ArrayList<String>();
+        if(query.equals("DELETE")) {
+            results.add("DELETE FROM Empresarios WHERE");
+            results.add("DELETE FROM Nomina WHERE");
+            results.add("DELETE FROM Libros WHERE");
+            results.add("DELETE FORM Peliculas WHERE");
+        }
+        if(query.equals("UPDATE")) {
+        	results.add("UPDATE Empresarios SET");
+            results.add("UPDATE Nomina SET");
+            results.add("UPDATE Libros SET");
+            results.add("UPDATE Peliculas SET");
+        }
+        else {
+            for(int i = 0; i < 10; i++) {
+                results.add(query + i);
+            }
+        }    
+        return results;
+    }
+	public void onSelect(SelectEvent<String> event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "select", event.getObject()));
+    }
 	private void createPolarAreaModel2() {
 		polarAreaModel2 = new PolarAreaChartModel();
         ChartData data = new ChartData();
@@ -139,7 +166,6 @@ public class Pagina {
         String[] dependencias= {"Tecnologia","Facturacion","Contabilidad","Comercial"};
         for(int i =0;i<dependencias.length;i++) {
         	ChartSeries values = new ChartSeries();
-        	
         	values.setLabel(dependencias[i]);
         	ArrayList<Empresarios> directorventas = graficossqlempresariosporcargo(dependencias[i],"Director de ventas");
     		ArrayList<Empresarios> ingdesarollo = graficossqlempresariosporcargo(dependencias[i],"Ingeniero de Desarrollo");
@@ -417,6 +443,25 @@ public class Pagina {
 			e.printStackTrace();
 		}
 	}
+	public String sqlautomatico(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = "root";
+			String password = "";
+			int rs;
+			Connection cn = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
+			Statement stt = cn.createStatement();
+			rs = stt.executeUpdate(lenguajesql);
+			cn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "AthenaHome.xhtml";
+	}
 	public void ordenarEnMySQL(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -479,6 +524,23 @@ public class Pagina {
 			e.printStackTrace();
 		}
 		return "AthenaHome.xhtml";
+	}
+	public String actualizaremp() {
+		try {
+			EmpresariosJSON.editar();
+			NominaJSON.editar();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "AthenaHome.xhtml";
+	}
+	public String editarpel() {
+		return "PeliculasEdd.xhtml";
+	}
+	public String editarlib() {
+		return "LibrosEdd.xhtml";
 	}
 	public String editaremp() {
 		return "EmpresariosEdd.xhtml";
@@ -565,8 +627,12 @@ public class Pagina {
 		}
 		return "AthenaOpciones.xhtml";
 	}
+	
 	public String home() {
 		return "AthenaHome.xhtml";
+	}
+	public String lenguajessql() {
+		return "Athenalenguajesql.xhtml";
 	}
 	public String opcionesentretenimiento() {
 		return "OpcionesEntretenimiento.xhtml";
@@ -763,5 +829,10 @@ public class Pagina {
 	public void setIsbn13(String isbn13) {
 		this.isbn13 = isbn13;
 	}
-	
+	public String getLenguajesql() {
+		return lenguajesql;
+	}
+	public void setLenguajesql(String lenguajesql) {
+		this.lenguajesql = lenguajesql;
+	}
 }
