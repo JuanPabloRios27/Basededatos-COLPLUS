@@ -40,16 +40,18 @@ body {
 				<p:graphicImage url="images/logo.png" style="width:5%; float:left;"></p:graphicImage>
 				<p:commandButton type="button" value="Cerrar Sección" style="float:right"/>
 				<p:commandButton type="button" value="Nuestros Clientes" style="float:right"/>
+				<p:menuitem type="button" value="Home" 
+				action = "#{pagina.home}"  style="float:right"/>
 			</f:facet>
 		</p:menubar>
 		<p:tabMenu activeIndex="#{param.i}">
-		<p:menuitem value="Empresarios" outcome="EmpresariosAdd">
+		<p:menuitem value="Empresarios." outcome="EmpresariosAdd">
 			<f:param name="i" value="0" />
 		</p:menuitem>
-		<p:menuitem value="Libros" outcome="AthenaVisualizacion">
+		<p:menuitem value="Peliculas." outcome="PeliculasAdd">
 			<f:param name="i" value="1" />
 		</p:menuitem>
-		<p:menuitem value="Peliculas." outcome="AthenaOpciones">
+		<p:menuitem value="Libros." outcome="LibrosAdd">
 			<f:param name="i" value="2" />
 		</p:menuitem>
 	</p:tabMenu>

@@ -43,6 +43,8 @@ body {
 					style="float:right" />
 				<p:commandButton type="button" value="Nuestros Clientes"
 					style="float:right" />
+				<p:commandButton type="button" value="Home" 
+				action = "#{pagina.home}"  style="float:right"/>
 			</f:facet>
 		</p:menubar>
 		<p:tabMenu activeIndex="#{param.i}">
@@ -59,8 +61,7 @@ body {
 		<p:panel
 			header="Registrar:" class="borde">
 			<h:panelGrid rows="3" columns="1" cellpadding="5">
-				<p:commandButton class="fondo"
-					action="#{pagina.crearemp}" value="Empresarios"
+				<p:commandButton action="#{pagina.crearemp}" value="Empresarios"
 					style="width:360%; text-align:left">
 					<f:param name="i" value="0" />
 				</p:commandButton>
@@ -69,7 +70,7 @@ body {
 					style="width:360%; text-align:left">
 					<f:param name="i" value="1" />
 				</p:commandButton>
-				<p:commandButton action="#{pagina.reportesalud}"
+				<p:commandButton action="#{pagina.crearlib}"
 					value="Libros" 
 					style="width:360%; text-align:left">
 					<f:param name="i" value="2" />

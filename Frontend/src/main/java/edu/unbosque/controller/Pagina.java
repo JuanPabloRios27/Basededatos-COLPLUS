@@ -41,12 +41,18 @@ public class Pagina {
 	private String dependencia2="Tecnologia";
 	private int codigo;
 	private int id_pelicula;
+	private int id_libros;
 	private String nombre;
 	private String pension;
+	private String autores;
 	private String salud;
 	private float sueldo;
 	private String cargo;
+	private String lenguaje;
+	private String editorial;
 	private String eps;
+	private String isbn;
+	private String isbn13;
 	private String[] genero;
 	private int anio;
 	private PieChartModel pieModel1;
@@ -66,6 +72,7 @@ public class Pagina {
 			libros = createSQLlibros();
 			codigo = empresarios.get(empresarios.size()-1).getCodigo()+1;
 			id_pelicula = peliculas.get(peliculas.size()-1).getCodigo()+1;
+			id_libros = (int) (libros.get(libros.size()-1).getId_libro()+1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,32 +310,7 @@ public class Pagina {
 		return null;
 	}
 
-	private ArrayList<Peliculas> createSQLpeliculas() {
-		try {
-			ArrayList<Peliculas> listaOrdenada = new ArrayList<>();
-			Class.forName("com.mysql.jdbc.Driver");
-			String user = "root";
-			String password = "";
-			ResultSet rs;
-			Connection cn = DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
-			Statement stt = cn.createStatement();
-			rs = stt.executeQuery("SELECT * FROM peliculas");
-			while (rs.next()) {
-				Peliculas peliculas = new Peliculas();
-				peliculas.setCodigo(rs.getInt("codigo"));
-				peliculas.setNombre(rs.getString("nombre"));
-				peliculas.setAnio(rs.getInt("anio"));
-				peliculas.setGenero(rs.getNString("genero"));
-				listaOrdenada.add(peliculas);
-			}
-			cn.close();
-			return listaOrdenada;
-		}catch(Exception e) {
-			
-		}
-		return null;
-	}
+	
 
 	private ArrayList<EmpresarioNorma> createSQLnovedad() {
 		try {
@@ -473,11 +455,37 @@ public class Pagina {
 	public String crearemp() {
 		return "EmpresariosAdd.xhtml";
 	}
+	public String crearlib() {
+		return "LibrosAdd.xhtml";
+	}
+	public String libroid() {
+		return String.valueOf(id_libros);
+	}
 	public String peliculaid() {
 		return String.valueOf(id_pelicula);
 	}
 	public String codigo() {
 		return String.valueOf(codigo);
+	}
+	public String librosadd() {
+		Libros libro = new Libros();
+		libro.setId_libro(id_libros);
+		libro.setAutores(autores);
+		libro.setTitulo(nombre);
+		libro.setEditorial(editorial);
+		libro.setIsbn(isbn);
+		libro.setIsbn13(isbn13);
+		libro.setFecha_Publicada(anio);
+		libro.setLenguaje(lenguaje);
+		libro.setFIELD13(" ");
+		libro.setRating(5.0);
+		try {
+			LibrosJSON.postJSON(libro);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "AthenaOpciones.xhtml";
 	}
 	public String peliculaadd() {
 		Peliculas pelicula = new Peliculas();
@@ -522,6 +530,9 @@ public class Pagina {
 			e.printStackTrace();
 		}
 		return "AthenaOpciones.xhtml";
+	}
+	public String home() {
+		return "AthenaHome.xhtml";
 	}
 	public String opcionesentretenimiento() {
 		return "OpcionesEntretenimiento.xhtml";
@@ -682,4 +693,41 @@ public class Pagina {
 	public void setGeneros(String[] generos) {
 		this.generos = generos;
 	}
+	public String getEditorial() {
+		return editorial;
+	}
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
+	}
+	public String getAutores() {
+		return autores;
+	}
+	public void setAutores(String autores) {
+		this.autores = autores;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getLenguaje() {
+		return lenguaje;
+	}
+	public void setLenguaje(String lenguaje) {
+		this.lenguaje = lenguaje;
+	}
+	public int getId_libros() {
+		return id_libros;
+	}
+	public void setId_libros(int id_libros) {
+		this.id_libros = id_libros;
+	}
+	public String getIsbn13() {
+		return isbn13;
+	}
+	public void setIsbn13(String isbn13) {
+		this.isbn13 = isbn13;
+	}
+	
 }

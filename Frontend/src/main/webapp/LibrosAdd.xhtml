@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.custom-menubar {
+	background-color: #FFFFFF;
+}
+
+body {
+	background-color: #B61A1A;
+}
+
+.borde div {
+	background-color: #FFB3B3;
+	border: #C1CCFF font-size: 16;
+	color: #000000;
+	text-align: left;
+	border: 1px solid #fafafa;
+}
+
+.fondo {
+	border: 2px solid black;
+	background-color: #FFF4E3;
+	text-align: left;
+}
+</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registros</title>
+</h:head>
+<h:body>
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<h:form>
+		<p:menubar styleClass="custom-menubar">
+			<f:facet name="options">
+				<p:graphicImage url="images/logo.png" style="width:5%; float:left;"></p:graphicImage>
+				<p:commandButton type="button" value="Cerrar Sección"
+					style="float:right" />
+				<p:commandButton type="button" value="Nuestros Clientes"
+					style="float:right" />
+				<p:commandButton type="button" value="Home" action="#{pagina.home}"
+					style="float:right" />
+			</f:facet>
+		</p:menubar>
+		<p:tabMenu activeIndex="#{param.i}">
+			<p:menuitem value="Empresarios" outcome="EmpresariosAdd">
+				<f:param name="i" value="0" />
+			</p:menuitem>
+			<p:menuitem value="Peliculas." outcome="PeliculasAdd">
+				<f:param name="i" value="1" />
+			</p:menuitem>
+			<p:menuitem value="Libros." outcome="LibrosAdd">
+				<f:param name="i" value="2" />
+			</p:menuitem>
+		</p:tabMenu>
+
+
+
+		<p:panel header="Registro de Libros." class="borde">
+			<h:panelGrid rows="8" columns="2">
+				<p:outputLabel value="Codigo:" for="Codigo"></p:outputLabel>
+				<p:autoComplete id="Codigo" value="#{pagina.id_libros}"
+					disabled="true"></p:autoComplete>
+				<p:outputLabel value="Nombre:" for="Nombre"></p:outputLabel>
+				<p:autoComplete id="Nombre" value="#{pagina.nombre}"></p:autoComplete>
+				<p:outputLabel value="Autores:" for="Autores"></p:outputLabel>
+				<p:autoComplete id="Autores" value="#{pagina.autores}"></p:autoComplete>
+				<p:outputLabel value="Editorial:" for="Editorial"></p:outputLabel>
+				<p:autoComplete id="Editorial" value="#{pagina.editorial}"></p:autoComplete>
+				<p:outputLabel value="Isbn:" for="ISBN"></p:outputLabel>
+				<p:autoComplete id="ISBN" value="#{pagina.isbn}"></p:autoComplete>
+				<p:outputLabel value="Isbn13:" for="ISBN13"></p:outputLabel>
+				<p:autoComplete id="ISBN13" value="#{pagina.isbn13}"></p:autoComplete>
+				<p:outputLabel value="Fecha:" for="Fecha"></p:outputLabel>
+				<p:inputNumber id="Fecha" value="#{pagina.anio}"></p:inputNumber>
+				<p:outputLabel value="Lenguaje:" for="len"></p:outputLabel>
+				<p:selectOneMenu id="len" value="#{pagina.lenguaje}"
+					style="width:200px">
+					<f:selectItem itemLabel="Seleccione una: " itemValue="" />
+					<f:selectItem itemLabel="eng" itemValue="eng" />
+					<f:selectItem itemLabel="esp" itemValue="esp" />
+					<f:selectItem itemLabel="ita" itemValue="ita" />
+					<f:selectItem itemLabel="fr" itemValue="fr" />
+					<f:selectItem itemLabel="ale" itemValue="ale" />
+					<f:selectItem itemLabel="jpn" itemValue="jpn" />
+				</p:selectOneMenu>
+				<p:commandButton action="#{pagina.librosadd()}" value="Registrar"></p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+
+</html>
