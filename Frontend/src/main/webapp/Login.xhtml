@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style type="text/css">
+.custom-menubar {
+	background-color: #FFFFFF;
+}
+
+body {
+	background-color: #B61A1A;
+}
+
+.fondo {
+	border: 2px solid black;
+	background-color: #FFF4E3;
+	text-align: left;
+}
+</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Bienvenidos a Athena Website</title>
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+</h:head>
+<h:body>
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<h:form>
+		<p:panel header="Inicio de seccion de Athena Services.">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Nombre:" for="Nombre"></p:outputLabel>
+				<p:autoComplete id="Nombre" value="#{pagina.usuario}"></p:autoComplete>
+				<p:outputLabel value="Contraseña:" for="contraseña"></p:outputLabel>
+				<p:password id="contraseña" value="#{pagina.password}" />
+				<p:messages showDetail="true" />
+                <p:captcha/>
+                <p:commandButton value="Log in" action="#{pagina.submit()}" ajax="false"  />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

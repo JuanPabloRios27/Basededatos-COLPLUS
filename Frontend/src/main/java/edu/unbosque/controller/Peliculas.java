@@ -7,13 +7,9 @@ public class Peliculas{
 	private String nombre;
 	private int anio;
 	private String genero;
-	
-	
 	public int getCodigo() {
 		return codigo;
 	}
-
-
 	public String getNombre() {
 		return nombre;
 	}

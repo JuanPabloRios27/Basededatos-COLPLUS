@@ -35,28 +35,30 @@ import org.primefaces.model.charts.polar.PolarAreaChartModel;
 @ManagedBean
 @RequestScoped
 public class Pagina {
-	private String orden;
-	private String dependencia;
-	private PolarAreaChartModel polarAreaModel;
+	private String orden; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String dependencia; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private PolarAreaChartModel polarAreaModel; //Importa una libreria que permita ejecutar un grafico de frecuencias.
 	private PolarAreaChartModel polarAreaModel2;
 	private String dependencia2="Tecnologia";
-	private int codigo;
-	private int id_pelicula;
-	private int id_libros;
-	private String nombre;
-	private String pension;
-	private String autores;
-	private String salud;
-	private float sueldo;
-	private String lenguajesql;
-	private String cargo;
-	private String lenguaje;
-	private String editorial;
-	private String eps;
-	private String isbn;
-	private String isbn13;
-	private String[] genero;
-	private int anio;
+	private String password;
+	private String usuario;
+	private int codigo; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private int id_pelicula; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private int id_libros; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String nombre; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String pension; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String autores; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String salud; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private float sueldo; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String lenguajesql; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String cargo; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String lenguaje; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String editorial; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String eps; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String isbn; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String isbn13; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private String[] genero; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
+	private int anio; //Guarda ese string par definir el orden hacia un elemento de la tabla en especifico
 	private PieChartModel pieModel1;
 	private BarChartModel barModel;
 	private String[] generos = {"Adventure","Animation","Children","Comedy","Fantasy","Romance"};
@@ -201,6 +203,8 @@ public class Pagina {
 	private void createPolarAreaModel() {
         polarAreaModel = new PolarAreaChartModel();
         ChartData data = new ChartData();
+        //Graficossqlconsultaepsporpension es una funcion que permite ejecutar el SQL de forma relacional.
+        //Asi para obtener informacion del mismo.
         ArrayList<Empresarios> empresariosSanitas = graficossqlconsulraepspension("EPS-Sanitas","Salud");
 		ArrayList<Empresarios> empresariosAliansa = graficossqlconsulraepspension("Aliansalud EPS","Salud");
 		ArrayList<Empresarios> empresariosNuevaEps = graficossqlconsulraepspension("Nueva EPS","Salud");
@@ -627,7 +631,37 @@ public class Pagina {
 		}
 		return "AthenaOpciones.xhtml";
 	}
-	
+	public String submit() {
+        boolean confirmacion = IngreseSQL();
+        if(confirmacion == true) {
+        	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Comprobacion: ", "Correcta");
+        	FacesContext.getCurrentInstance().addMessage(null, msg);
+        	return "AthenaHome.xhtml";
+        }else {
+        	FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR:","Datos incorrectos");
+        	FacesContext.getCurrentInstance().addMessage(null, msg2);
+        	return "";
+        }
+    }
+	private boolean IngreseSQL() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			String user = usuario;
+			String password = this.password;
+			Connection cn = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/coldatabase?useUnicode=true&useJDBCC", user, password);
+			Statement stt = cn.createStatement();
+			cn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 	public String home() {
 		return "AthenaHome.xhtml";
 	}
@@ -835,4 +869,17 @@ public class Pagina {
 	public void setLenguajesql(String lenguajesql) {
 		this.lenguajesql = lenguajesql;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
 }

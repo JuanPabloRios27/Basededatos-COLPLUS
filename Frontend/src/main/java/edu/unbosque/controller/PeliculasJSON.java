@@ -20,12 +20,17 @@ import org.json.simple.parser.ParseException;
 
 @ManagedBean
 public class PeliculasJSON {
+	//Esta variable entabla la conexion de la dirección que maneja la aplicacion backend
 	private static URL url;
+	//Esta variable se encarga de ubicar el puerto del servidor.
 	private static String sitio = "http://localhost:8088/";
-	
+	//Consiga la tabla de la base de datos.
 	public static ArrayList<Peliculas> getJSON() throws IOException, ParseException{
+		//Ejecute esa direccion.
 		url = new URL(sitio+"Pelicula/listar");
+		//Establesca la conexion.
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
+		//consigue la informacion
 		http.setRequestMethod("GET");
 		http.setRequestProperty("Accept", "application/json");
 		InputStream respuesta = http.getInputStream();
@@ -39,13 +44,14 @@ public class PeliculasJSON {
 		http.disconnect();
 		return lista;
 	}
-	
+	//Agregue los elementos a nuestro arreglo.
 	public static ArrayList<Peliculas> parsingNomina(String json) throws ParseException {
         JSONParser jsonParser = new JSONParser();
         ArrayList<Peliculas> lista = new ArrayList<Peliculas>();
         JSONArray nominas = (JSONArray) jsonParser.parse(json);
         Iterator i = nominas.iterator();
         while (i.hasNext()) {
+        	//Define el arreglo.
             JSONObject innerObj = (JSONObject) i.next();
             Peliculas pelicula = new Peliculas();
             pelicula.setCodigo(Integer.parseInt(innerObj.get("codigo").toString()));
@@ -56,6 +62,7 @@ public class PeliculasJSON {
         }
         return lista;
 	}
+	//Agrege un elemento a su tabla
 	public static int postJSON(Peliculas ab) throws IOException {
 		url = new URL(sitio+"Pelicula/guardar");
 		HttpURLConnection http;
@@ -83,6 +90,7 @@ public class PeliculasJSON {
 		http.disconnect();
 		return respuesta;
 	}
+	//Elimine un elemento a su tabla.
 	public static void eliminar(int cedula) throws IOException, ParseException{
 		url = new URL(sitio+"Pelicula/eliminar/"+cedula);
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -96,6 +104,7 @@ public class PeliculasJSON {
 		}
 		http.disconnect();
 	}
+	//Edite su elemento a su tabla.
 	public static void editar() throws IOException, ParseException{
 		url = new URL(sitio+"Peliculas/editar/");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -109,6 +118,7 @@ public class PeliculasJSON {
 		}
 		http.disconnect();
 	}
+	//Esta funcion ayudaba a inportar la informacion desde los archivos csv
 	public void agregarcsv() {
 		String archivo = "C:\\Users\\USER\\git\\Basededatos-COLPLUS\\Frontend\\memoria\\movies.csv";
 		ArrayList<Peliculas> empresario = new ArrayList<>();

@@ -108,8 +108,8 @@ public class EmpresariosJSON {
 	public static void editar() throws IOException, ParseException{
 		url = new URL(sitio+"Empresarios/actualizar");
 		HttpURLConnection http = (HttpURLConnection)url.openConnection();
-		http.setRequestMethod("PUT");
-		http.setRequestProperty("Content-Type", "application/json");
+		http.setRequestMethod("DELETE");
+		http.setRequestProperty("Accept", "application/json");
 		http.setDoOutput(true);
 		InputStream respuesta = http.getInputStream();
 		byte[] inp = respuesta.readAllBytes();
