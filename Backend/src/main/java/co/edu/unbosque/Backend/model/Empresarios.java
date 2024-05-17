@@ -5,11 +5,13 @@ package co.edu.unbosque.Backend.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
+//Objeto que inicializara como elemento a la base de datos
 @Entity
 public class Empresarios {
+	//La llave es el codigo
 	@Id
 	private int codigo;
+	//resto de sus elementos y creacion de su programa
 	private String nombre;
 	private String dependencia;
 	private String cargo;
